@@ -6,7 +6,7 @@
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: D&D 5e
 
-### Link to Foundru VTT download
+### Link to Foundry VTT download
 * [https://raw.githubusercontent.com/psyny/FoundryVTT/master/CozyPlayer/cozy-player/module.json](https://raw.githubusercontent.com/psyny/FoundryVTT/master/CozyPlayer/cozy-player/module.json)
 
 ### Description
