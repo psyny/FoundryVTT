@@ -1,0 +1,58 @@
+div.dmtk-tooltip {
+  visibility: visible;
+  width: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  text-align: right;
+  border-radius: 6px;
+  font-size: 1.0rem;
+  position: absolute;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+	padding: 5px 10px;
+}
+
+div.dmtk-tooltip div.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+div.dmtk-tooltip div.title {
+  color: rgb(245, 182, 66);
+	padding-right: 0px;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+div.dmtk-tooltip div.value {
+  text-align: left;
+	align-items: left;
+  justify-content: left;
+}
+
+div.dmtk-tooltip div.spacer {
+  width: 10px;
+}
+
+div.dmtk-tooltip div.label {
+	align-items: right;
+  justify-content: right;
+  text-align: right;
+  
+  color: rgb(75, 130, 225);
+
+	padding-right: 5px;
+}
+
+div.dmtk-tooltip div.label i {
+	padding-right: 10px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+div.dmtk-tooltip.visible {
+  visibility: visible;
+}
