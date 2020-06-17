@@ -26,10 +26,15 @@ This module adds some quality of life tools mainly for players:
 ## Token Tooltip Update Notes
 **Version**: 1.0.0
 * Tooltips should now properly appear based on the module settings
-* Tooltips should also appear next to a token just outside of the token control hud icons on the the right side regardless of zoom level in the scene
+* Tooltips should also appear next to a token just outside of the token control hud icons on the the right side regardless of zoom level in the scene.
+
+## Known issues
+- A lot of language typos.
+- Automatic sheet closing don't works with betterrolls yet.
+- For some reason, combat encounter needs to be created (dont need to be started) for initiative roll work.
 
 ## Thanks and Credits
-- Sky for the amazing token tooltip module that was base of this module (in code, inspiration and knowledge): [link](https://github.com/Sky-Captain-13/foundry/tree/master/token-tooltip) 
+- Sky for the amazing token tooltip module that was my starting point for this module (in code, inspiration and knowledge): [link](https://github.com/Sky-Captain-13/foundry/tree/master/token-tooltip) 
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
