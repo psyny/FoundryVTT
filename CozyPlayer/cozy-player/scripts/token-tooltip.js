@@ -1,17 +1,20 @@
 // Class to create and control tooltip data on hover
 class TokenTooltip
 {
+  static tooltips = 0;
+  
   static onHover(object, hovered) {
     // Return conditions
     if (  !object 
           || !object.actor
           || event == undefined
-          || keyboard.isDown("Alt") 
           )
     {
       TokenTooltip._removeToolTip();
       return;
     }
+    
+    TokenTooltip._removeToolTip();
   
     // Check acess
     let tooltipVisibility = game.settings.get("cozy-player", "tooltipVisibility");
@@ -25,7 +28,10 @@ class TokenTooltip
       else if( tooltipVisibility === "friendly" ) minAccess = 1;
       else if( tooltipVisibility === "ally" ) minAccess = 2;
       else if( tooltipVisibility === "owned" ) minAccess = 3;
-      else if( tooltipVisibility === "gm" ) return;
+      else if( tooltipVisibility === "gm" ) {
+        TokenTooltip._removeToolTip();
+        return;
+      }
       
       // Calculate Access to the token
       let accessLevel = 1;
@@ -55,7 +61,6 @@ class TokenTooltip
     
     // PARSE TOKEN/ACTOR INFO
     let resources = {};
-    resources.actorName = object.actor.data.name;
     resources.max = game.settings.get("cozy-player", "tooltipMaxItems");
     resources.list = [];
     
@@ -114,17 +119,23 @@ class TokenTooltip
     // TEMPORARY FIX FOR TOOLTIPS ON OVERWORLD MAP
     //if (parseInt(info.ac) === 0) return;
     
-    // Header
+    // Header and Footer
     let divStart = `<div class="section">`;
-    if( game.settings.get("cozy-player", "tooltipShowName") ) divStart += `<div class="title"><n>${resources.actorName}</n></div>`;
+    const divEnd = `</table></div>`;
+    
+    // Actor name 
+    if( game.settings.get("cozy-player", "tooltipShowName") === "actor" ) {
+      let name = object.actor ? object.actor.data.name : object.name ? object.name : "nameless";
+      if(name) divStart += `<div class="title"><n>${name}</n></div>`;
+    } else if (game.settings.get("cozy-player", "tooltipShowName") === "token") {
+      let name = object.name ? object.name : object.actor ? object.actor.data.name : "nameless";
+      divStart += `<div class="title"><n>${name}</n></div>`;
+    } 
     divStart += `<table style="width:100%; border: 0px">`;
     
-    const divEnd = `</table></div>`;
-
+    // Write row-by-row
     let variableData = ``;
     let rows = 0;
-    
-    // Write row-by-row
     let numberOfCols = Math.floor( resources.list.length / (maxResourcePerRow + 1 ) ) + 1;
     for (let i = 0; i < maxResourcePerRow; i++) {
       let rowString = `<tr>`;

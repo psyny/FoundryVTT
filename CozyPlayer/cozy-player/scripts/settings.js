@@ -83,11 +83,16 @@ Hooks.once("init", () => {
 	});
   
 	game.settings.register("cozy-player", "tooltipShowName", {
-		name: "Token Tooltip: Show Actor Name",
+		name: "Token Tooltip: Actor Name",
 		scope: "world",
 		config: true,
-		default: true,
-		type: Boolean
+		default: "token",
+		type: String,
+		choices: {
+      "no": "Don't show",
+      "token": "Show token name",
+      "actor": "Show actor name"
+		}
 	});
   
 	game.settings.register("cozy-player", "tooltipShowHP", {

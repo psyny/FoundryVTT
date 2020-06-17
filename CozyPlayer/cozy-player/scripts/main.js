@@ -2,6 +2,7 @@
 Hooks.once('ready', () => {
   const originalMethod = Roll.prototype.toMessage;
   Roll.prototype.toMessage = function (chatData={}, {rollMode=null, create=true}={}) {
+    //insertFlavorTargets(chatData); // WIP
     closeSheets();
     return originalMethod.apply(this, arguments);
   };
@@ -183,6 +184,42 @@ async function closeSheets()
 	return;
 }
 
+// Get Selected Targets (returns a token list)
+function getSelectedTargets()
+{
+  let targetList = [];
+  
+  const targets = game.user.targets.values();
+  for(let target = targets.next(); !target.done; target = targets.next())
+  {
+    targetList.push(target.value);
+  }
+  
+  return targetList;
+}
+
+// Insert skill targets on flavor text
+function insertFlavorTargets(chatData)
+{
+    if(chatData.flavor.includes("Attack Roll")) {
+      let targetsString = "";
+      let targets = getSelectedTargets();
+      
+      if(targets.length > 0) {
+        targetsString += "<br>targets: ";
+      }
+      
+      let first = true;
+      for(let i = 0; i < targets.length; i++) {
+        let target = targets[i];
+        if(first) first = false;
+        else targetsString += ", ";
+        targetsString += target.name;
+      }
+      
+      chatData.flavor += targetsString;
+    }
+}
 
 // Designed to player end current turn if its owner of current turn actor
 async function endTurn()
