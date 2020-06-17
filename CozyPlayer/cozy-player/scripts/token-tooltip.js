@@ -3,10 +3,16 @@ class TokenTooltip
 {
   static onHover(object, hovered) {
     // Return conditions
-    if (!object || !object.actor) return;
-    if (event == undefined) return;
-    if ( keyboard.isDown("Alt") ) return;
-    
+    if (  !object 
+          || !object.actor
+          || event == undefined
+          || keyboard.isDown("Alt") 
+          )
+    {
+      TokenTooltip._removeToolTip();
+      return;
+    }
+  
     // Check acess
     let tooltipVisibility = game.settings.get("cozy-player", "tooltipVisibility");
     let showTooltip = false;
