@@ -7,7 +7,7 @@ Hooks.once("init", () => {
 		default: true,
 		type: Boolean
 	});
-  
+
   game.settings.register("cozy-player", "toolbarShowSkills", {
 		name: "Left Toolbar: Show Skills",
     hint: "Adds buttons to the left tool bar to roll perception, insight and investigation",
@@ -21,6 +21,46 @@ Hooks.once("init", () => {
 		name: "Left Toolbar: Turn Tools",
     hint: "Adds buttons to the left tool bar to roll initiative and end turn",
 		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
+  game.settings.register("cozy-player", "chatActorTokenIntegration", {
+		name: "Chat Integration: Enabled",
+    hint: "Enables token selection via chat speaker name click.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
+  game.settings.register("cozy-player", "targetsShowOnRoll", {
+		name: "Targets: Show on Roll",
+    hint: "Shows current targets on chat when rolling dices. If Chat Integration is enabled, all names shown can be selectable by other players.",
+		scope: "world",
+		config: true,
+		default: "all",
+		type: String,
+		choices: {
+      "none": "Don't show",
+      "all": "Show for all rolls"
+		}
+	});
+  
+  game.settings.register("cozy-player", "targetsClearOnRoll", {
+		name: "Targets: Clear on Roll",
+    hint: "Deselects all targets when rolling for something.",
+		scope: "client",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
+  game.settings.register("cozy-player", "targetsClearOnTurnEnd", {
+		name: "Targets: Clear on Turn End",
+    hint: "Deselects all targets when passing your turn.",
+		scope: "client",
 		config: true,
 		default: true,
 		type: Boolean
