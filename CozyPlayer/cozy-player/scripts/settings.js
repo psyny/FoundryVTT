@@ -1,11 +1,16 @@
 Hooks.once("init", () => {
-  game.settings.register("cozy-player", "sheetsMinimizeOnRoll", {
-		name: "Sheets: Minimize On Roll",
-    hint: "Minimize the character sheet when the user clicks on something that promps a roll",
+  game.settings.register("cozy-player", "sheetsActionOnRoll", {
+		name: "Sheets: Action on roll",
+    hint: "Minimizes or closes the character sheet when the user clicks on something that promps a roll",
 		scope: "client",
 		config: true,
-		default: true,
-		type: Boolean
+		default: "minimize",
+		type: String,
+		choices: {
+      "none": "Do nothing",
+      "minimize": "Minimize sheet",
+      "close": "Close sheet"
+		}
 	});
 
   game.settings.register("cozy-player", "toolbarShowSkills", {

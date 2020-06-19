@@ -1,22 +1,10 @@
-// Automaticaly close sheets when rolling for something
-Hooks.once('ready', () => {
-  const originalMethod = Roll.prototype.toMessage;
-  Roll.prototype.toMessage = function (chatData={}, {rollMode=null, create=true}={}) {
+Hooks.on('createChatMessage', (chatMessage) => {
+    if (!chatMessage.isRoll || !chatMessage.isContentVisible) {
+        return;
+    }
+
     closeSheets();
-    return originalMethod.apply(this, arguments);
-  };
 });
-
-Hooks.on('chatMessage', (chatLog, message, chatData) => {
-  let [command, match] = chatLog.constructor.parse(message);
-  if (!match) throw new Error("Unmatched chat command");
-
-  if(["roll", "gmroll", "blindroll", "selfroll"].includes(command)) {
-      closeSheets();
-      return true;
-  }
-});
-
 
 // Confort Shortcuts on default bar
 Hooks.on('getSceneControlButtons', controls => {
@@ -170,14 +158,15 @@ async function enterCombatAndRollInitative()
 // Close opened sheets
 async function closeSheets()
 {
-  if(!game.settings.get("cozy-player", "sheetsMinimizeOnRoll")) return;
+  if(game.settings.get("cozy-player", "sheetsActionOnRoll") === "none" ) return;
   
 	for(appId in ui.windows)
 	{
 		const win = ui.windows[appId];
 		if(win && win.options && win.options.baseApplication == "ActorSheet")
 		{
-			win.minimize();
+      if(game.settings.get("cozy-player", "sheetsActionOnRoll") === "minimize") win.minimize();
+      else win.close();
 		}
 	}
 	return;
