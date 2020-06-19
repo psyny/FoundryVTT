@@ -1,0 +1,22 @@
+{
+    "DICESONICE.config": "Ajustes de los dados 3D",
+    "DICESONICE.configTitle": "Ajustes de los dados 3D",
+    "DICESONICE.configHint": "Ajuste la configuración de los dados 3D, como el color y el tamaño",
+
+    "DICESONICE.enable": "Activar dados 3D",
+    "DICESONICE.labelColor": "Color de la etiqueta",
+    "DICESONICE.diceColor": "Color de los dados",
+    "DICESONICE.hideAfterRoll": "Ocultar automáticamente",
+    "DICESONICE.timeBeforeHide": "Milisegundos antes de ocultar",
+    "DICESONICE.hideFX": "Ocultar FX",
+    "DICESONICE.autoSize": "¿Escalado automático?",
+    "DICESONICE.size": "Escalado manual",
+    "DICESONICE.None": "Ninguno",
+    "DICESONICE.FadeOut": "Desvanecimiento",
+    "DICESONICE.speed": "Velocidad de animación",
+    "DICESONICE.NormalSpeed": "Normal",
+    "DICESONICE.2xSpeed": "2x",
+    "DICESONICE.3xSpeed": "3x",
+    "DICESONICE.Save": "Guardar",
+    "DICESONICE.Apply": "Aplicar"
+}

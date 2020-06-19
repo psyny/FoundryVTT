@@ -1,0 +1,50 @@
+{
+	"name": "dice-so-nice",
+	"title": "Dice So Nice! (limited edition)",
+	"description": "Adds the ability to show a nice 3D dice simulation when a roll is made. This version limits functionality: basicaly the dice color will always reflect the player color.",
+	"version": "1.0.0",
+  "original-version": "2.0.2",
+	"minimumCoreVersion" : "0.5.7",
+	"compatibleCoreVersion" : "0.6.2",
+	"author": "Simone and JDW done a great job but Psyny changed stuff... for worse",
+	"esmodules": [
+		"./main.js"
+	],
+	"scripts": [
+		"./libs/cannon.min.js",
+		"./libs/three.min.js"
+	],
+	"socket": true,
+	"styles": [
+		"./style.css"
+	],
+	"languages": [{
+		"lang": "en",
+		"name": "English",
+		"path": "./lang/en.json"
+	}, {
+		"lang": "it",
+		"name": "Italian",
+		"path": "./lang/it.json"
+	}, {
+		"lang": "es",
+		"name": "Spanish",
+		"path": "./lang/es.json"
+	}, {
+		"lang": "cn",
+		"name": "Chinese",
+		"path": "./lang/cn.json"
+	}, {
+		"lang": "ko",
+		"name": "Korean",
+		"path": "./lang/ko.json"
+	}, {
+		"lang": "pt-BR",
+		"name": "Português (Brasil)",
+		"path": "./lang/pt-BR.json"
+	}],
+  
+  "url": "https://github.com/psyny/FoundryVTT/tree/master/DiceSoNiceLimited/dice-so-nice",
+	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/DiceSoNiceLimited/dice-so-nice/module.json",
+	"download": "https://github.com/psyny/FoundryVTT/raw/master/DiceSoNiceLimited/dice-so-nice.zip"
+}

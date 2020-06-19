@@ -1,0 +1,137 @@
+01) Keep dice color as player color
+Description: Dice color (main color) will always be the same as the player color.
+Changes:
+Location: main.js.Dice3D.APPEARANCE 
+Before the return of the function add:
+appearance.diceColor = user.color; // PSY
+
+
+02) Limit options
+Description: Will limit what the player can change in the module options
+Location: templates.dice-config.html
+Replaced the file completely
+
+Location: main.js.<end of file>
+Add:
+// PSY
+function setFixedSettings(configData, setQualityData = false) {
+  // Settings
+  configData.enabled = true;
+  configData.hideAfterRoll = true;
+  configData.timeBeforeHide = 3000;
+  configData.hideFX = 'fadeOut';
+  configData.autoscale = false;
+  configData.scale = 50;
+  configData.speed = 1;
+  configData.sounds = true;
+  
+  // Appearance
+  configData.diceColor = game.user.color;
+  configData.colorset = "custom";
+  configData.system = "standard";
+  
+  // Quality Data
+  if(setQualityData) setVisualQuality(configData);
+}
+
+function setVisualQuality(configData) {
+  if(configData.visualQuality === "mid") {
+    configData.bumpMapping = true;
+    configData.shadowQuality = "none";
+  } else if (configData.visualQuality === "high") {
+    configData.bumpMapping = true;
+    configData.shadowQuality = "high";
+  } else {
+    configData.visualQuality = "low";
+    configData.bumpMapping = false;
+    configData.shadowQuality = "none";
+  }
+}
+
+Location: main.js.DiceConfig.onApply
+Replace this part:
+        setTimeout(() => {
+
+            let config = {
+                visualQuality: $('select[name="visualQuality"]').val(), // PSY
+                labelColor: $('input[name="labelColor"]').val(),
+                diceColor: null, // PSY
+                outlineColor: $('input[name="outlineColor"]').val(),
+                edgeColor: $('input[name="edgeColor"]').val(),
+                autoscale: false,
+                scale: 60,
+                shadowQuality: null, // PSY
+                bumpMapping: null, // PSY
+                colorset: null, // PSY
+                texture: $('select[name="texture"]').val(),
+                sounds: null, // PSY
+                system: null // PSY
+            };
+            setFixedSettings(config, true); // PSY
+            config.scale = 60; // PSY
+
+            this.box.update(config);
+            this.box.showcase(config);
+        }, 100);
+        
+        
+Location: main.js.DiceConfig.toggleCustomColors
+Replace whole funciton
+    toggleCustomColors() {
+        // let colorset = $('select[name="colorset"]').val() !== 'custom'; PSY
+        let colorset = false;
+        $('input[name="labelColor"]').prop("disabled", colorset);
+        // $('input[name="diceColor"]').prop("disabled", colorset); // PSY
+        $('input[name="outlineColor"]').prop("disabled", colorset);
+        $('input[name="edgeColor"]').prop("disabled", colorset);
+        $('input[name="labelColorSelector"]').prop("disabled", colorset);
+        // $('input[name="diceColorSelector"]').prop("disabled", colorset); // PSY
+        $('input[name="outlineColorSelector"]').prop("disabled", colorset);
+        $('input[name="edgeColorSelector"]').prop("disabled", colorset);
+    }
+    
+    
+Location: main.js.DiceConfig.activateListeners
+Replace whole funciton
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        let canvas = document.getElementById('dice-configuration-canvas');
+        let config = mergeObject(
+            this.reset ? Dice3D.ALL_DEFAULT_OPTIONS() : Dice3D.ALL_CONFIG(),
+            {dimensions: { w: 500, h: 245 }, autoscale: false, scale: 60}
+        );
+
+        this.box = new DiceBox(canvas, game.dice3d.box.dicefactory, config);
+        this.box.initialize();
+        this.box.showcase(config);
+
+        //this.toggleHideAfterRoll(); // PSY
+        //this.toggleAutoScale(); // PSY
+        this.toggleCustomColors();
+        
+        $('select[name="visualQuality"]')[0].value = config.visualQuality; // PSY
+
+        // html.find('input[name="hideAfterRoll"]').change(this.toggleHideAfterRoll.bind(this)); // PSY
+        // html.find('input[name="autoscale"]').change(this.toggleAutoScale.bind(this)); // PSY
+        html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this));
+        html.find('input,select').change(this.onApply.bind(this));
+        //html.find('button[name="reset"]').click(this.onReset.bind(this)); // PSY
+
+        this.reset = false;
+    }
+    
+    
+    
+Location: main.js.Hooks.once('ready'...
+Add at end:
+    // PSY
+    let fixedSettings = {};
+    let settings = mergeObject(Dice3D.CONFIG, setFixedSettings(fixedSettings), { insertKeys: false, insertValues: false });
+    game.settings.set('dice-so-nice', 'settings', settings);
+        
+        
+        
+Location: main.js.Dice3D.DEFAULT_APPEARANCE
+Add at start, as part of returned map:
+  visualQuality: "mid", // PSY

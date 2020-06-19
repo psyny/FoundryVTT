@@ -1,0 +1,60 @@
+<div class="tab active" data-tab="general">
+    <div id="dice-configuration-canvas" style="width: 500px; height: 245px"></div>
+    <form autocomplete="off" class="dice-so-nice">
+    
+        <div class="form-group">
+            <label>{{localize "DICESONICE.labelColor"}}</label>
+            <div class="form-fields">
+                <input type="text"  name="labelColor" value="{{labelColor}}" data-dtype="String"/>
+                <input type="color" name="labelColorSelector" value="{{labelColor}}" data-edit="labelColor"/>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>{{localize "DICESONICE.outlineColor"}}</label>
+            <div class="form-fields">
+                <input type="text" name="outlineColor" value="{{outlineColor}}" data-dtype="String"/>
+                <input type="color" name="outlineColorSelector" value="{{outlineColor}}" data-edit="outlineColor"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "DICESONICE.edgeColor"}}</label>
+            <div class="form-fields">
+                <input type="text" name="edgeColor" value="{{edgeColor}}" data-dtype="String"/>
+                <input type="color" name="edgeColorSelector" value="{{edgeColor}}" data-edit="edgeColor"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "DICESONICE.texture"}}</label>
+            <select name="texture" style="flex: 1;">
+                {{#select texture}}
+                {{#each textureList as |name key|}}
+                <option value="{{key}}">{{name}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Visual Quality</label>
+            <select name="visualQuality" style="flex: 1;">
+                <option value="low">Low: No Shadows and No Bumps</option>
+                <option value="mid">Ok: Bumps but no shadows</option>
+                <option value="high">High: Shadows and Bumps</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="margin-top: 20px;">
+            <button type="button" name="reset">
+                <i class="fas fa-refresh"></i> {{localize "DICESONICE.Reset"}}
+            </button>
+            <button type="submit" name="submit">
+                <i class="fas fa-save"></i> {{localize "DICESONICE.Save"}}
+            </button>
+        </div>
+
+    </form>
+
+</div>
