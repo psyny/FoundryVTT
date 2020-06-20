@@ -1,3 +1,11 @@
+NEW FILES
+Location: .texturespsyny/*
+Location: .textureDB.js
+
+REMOVED FILES
+Location: .textures/*
+
+
 01) Keep dice color as player color
 Description: Dice color (main color) will always be the same as the player color.
 Changes:
@@ -6,7 +14,7 @@ Before the return of the function add:
 appearance.diceColor = user.color; // PSY
 
 
-02) Limit options
+02) change options
 Description: Will limit what the player can change in the module options
 Location: templates.dice-config.html
 Replaced the file completely
@@ -49,7 +57,10 @@ function setVisualQuality(configData) {
 }
 
 Location: main.js.DiceConfig.onApply
-Replace this part:
+Repalce whole function:
+    onApply(event) {
+        if(event) event.preventDefault(); // PSY
+
         setTimeout(() => {
 
             let config = {
@@ -73,10 +84,11 @@ Replace this part:
             this.box.update(config);
             this.box.showcase(config);
         }, 100);
+    }
         
         
 Location: main.js.DiceConfig.toggleCustomColors
-Replace whole funciton
+Replace whole funciton:
     toggleCustomColors() {
         // let colorset = $('select[name="colorset"]').val() !== 'custom'; PSY
         let colorset = false;
@@ -101,7 +113,7 @@ Replace whole funciton
             this.reset ? Dice3D.ALL_DEFAULT_OPTIONS() : Dice3D.ALL_CONFIG(),
             {dimensions: { w: 500, h: 245 }, autoscale: false, scale: 60}
         );
-
+        
         this.box = new DiceBox(canvas, game.dice3d.box.dicefactory, config);
         this.box.initialize();
         this.box.showcase(config);
@@ -114,8 +126,9 @@ Replace whole funciton
 
         // html.find('input[name="hideAfterRoll"]').change(this.toggleHideAfterRoll.bind(this)); // PSY
         // html.find('input[name="autoscale"]').change(this.toggleAutoScale.bind(this)); // PSY
-        html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this));
+        // html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this)); // PSY
         html.find('input,select').change(this.onApply.bind(this));
+        html.find('button[name="removeEdges"]').click(this.onRemoveEdges.bind(this)); // PSY
         //html.find('button[name="reset"]').click(this.onReset.bind(this)); // PSY
 
         this.reset = false;
@@ -135,3 +148,19 @@ Add at end:
 Location: main.js.Dice3D.DEFAULT_APPEARANCE
 Add at start, as part of returned map:
   visualQuality: "mid", // PSY
+  
+  
+Location: main.js.Dice3D.onRemoveEdges
+added this function:
+    onRemoveEdges() {
+      $('input[name="edgeColor"]')[0].value = "";
+      this.onApply();
+    }
+    
+Location: main.js
+On top of the file add:
+import {fillTextureDatabase} from './textureDB.js';  // PSY
+
+Location: main.js.Hooks.once('init'...
+Add at end:
+    fillTextureDatabase(TEXTURELIST); // PSY

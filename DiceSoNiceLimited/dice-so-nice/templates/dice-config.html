@@ -3,7 +3,7 @@
     <form autocomplete="off" class="dice-so-nice">
     
         <div class="form-group">
-            <label>{{localize "DICESONICE.labelColor"}}</label>
+            <label>Number Color</label>
             <div class="form-fields">
                 <input type="text"  name="labelColor" value="{{labelColor}}" data-dtype="String"/>
                 <input type="color" name="labelColorSelector" value="{{labelColor}}" data-edit="labelColor"/>
@@ -11,7 +11,7 @@
         </div>
         
         <div class="form-group">
-            <label>{{localize "DICESONICE.outlineColor"}}</label>
+            <label>Number Contour Color</label>
             <div class="form-fields">
                 <input type="text" name="outlineColor" value="{{outlineColor}}" data-dtype="String"/>
                 <input type="color" name="outlineColorSelector" value="{{outlineColor}}" data-edit="outlineColor"/>
@@ -19,15 +19,16 @@
         </div>
 
         <div class="form-group">
-            <label>{{localize "DICESONICE.edgeColor"}}</label>
+            <label>Dice Edges Color</label>
             <div class="form-fields">
                 <input type="text" name="edgeColor" value="{{edgeColor}}" data-dtype="String"/>
+                <button type="button" name="removeEdges"><i class="fas fa-trash"></i></button>
                 <input type="color" name="edgeColorSelector" value="{{edgeColor}}" data-edit="edgeColor"/>
             </div>
         </div>
 
         <div class="form-group">
-            <label>{{localize "DICESONICE.texture"}}</label>
+            <label>Material</label>
             <select name="texture" style="flex: 1;">
                 {{#select texture}}
                 {{#each textureList as |name key|}}
@@ -47,9 +48,6 @@
         </div>
 
         <div class="form-group" style="margin-top: 20px;">
-            <button type="button" name="reset">
-                <i class="fas fa-refresh"></i> {{localize "DICESONICE.Reset"}}
-            </button>
             <button type="submit" name="submit">
                 <i class="fas fa-save"></i> {{localize "DICESONICE.Save"}}
             </button>

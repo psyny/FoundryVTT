@@ -2,7 +2,7 @@
 	"name": "dice-so-nice",
 	"title": "Dice So Nice! (limited edition)",
 	"description": "Adds the ability to show a nice 3D dice simulation when a roll is made. This version limits functionality: basicaly the dice color will always reflect the player color.",
-	"version": "1.0.0",
+	"version": "1.1.0",
   "original-version": "2.0.2",
 	"minimumCoreVersion" : "0.5.7",
 	"compatibleCoreVersion" : "0.6.2",

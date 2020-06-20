@@ -1,6 +1,7 @@
 import {DiceFactory} from './DiceFactory.js';
 import {DiceBox} from './DiceBox.js';
 import {DiceColors, TEXTURELIST, COLORSETS} from './DiceColors.js';
+import {fillTextureDatabase} from './textureDB.js';  // PSY
 
 /**
  * Registers the exposed settings for the various 3D dice options.
@@ -42,6 +43,8 @@ Hooks.once('init', () => {
         },
         config: true
     });
+    
+    fillTextureDatabase(TEXTURELIST); // PSY
 });
 
 /**
@@ -654,8 +657,9 @@ class DiceConfig extends FormApplication {
 
         // html.find('input[name="hideAfterRoll"]').change(this.toggleHideAfterRoll.bind(this)); // PSY
         // html.find('input[name="autoscale"]').change(this.toggleAutoScale.bind(this)); // PSY
-        html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this));
+        // html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this)); // PSY
         html.find('input,select').change(this.onApply.bind(this));
+        html.find('button[name="removeEdges"]').click(this.onRemoveEdges.bind(this)); // PSY
         //html.find('button[name="reset"]').click(this.onReset.bind(this)); // PSY
 
         this.reset = false;
@@ -687,7 +691,7 @@ class DiceConfig extends FormApplication {
     }
 
     onApply(event) {
-        event.preventDefault();
+        if(event) event.preventDefault(); // PSY
 
         setTimeout(() => {
 
@@ -712,6 +716,11 @@ class DiceConfig extends FormApplication {
             this.box.update(config);
             this.box.showcase(config);
         }, 100);
+    }
+    
+    onRemoveEdges() {
+      $('input[name="edgeColor"]')[0].value = "";
+      this.onApply();
     }
 
     onReset() {
