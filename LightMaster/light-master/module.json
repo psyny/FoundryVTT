@@ -1,0 +1,24 @@
+{
+	"name": "cozy-player",
+	"title": "Cozy Player",
+	"description": "QoL shortcuts for players",
+	"author": "Psyny",
+	"version": "1.0.5",
+	"minimumCoreVersion": "0.6.0",
+  
+	"scripts": [
+    "./scripts/main.js",
+    "./scripts/settings.js",
+    "./scripts/token-tooltip.js",
+    "./scripts/chat-integration.js"
+	],
+  
+	"styles": [
+    "./styles.css"
+  ],
+  
+  "url": "https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer/cozy-player",
+	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/CozyPlayer/cozy-player/module.json",
+	"download": "https://github.com/psyny/FoundryVTT/raw/master/CozyPlayer/cozy-player.zip"
+}
+
