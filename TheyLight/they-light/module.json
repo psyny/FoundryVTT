@@ -1,0 +1,17 @@
+{
+	"name": "they-light",
+	"title": "They Light",
+	"description": "Controls scene light.",
+	"author": "Psyny",
+	"version": "1.0.0",
+	"minimumCoreVersion": "0.5.0",
+
+	"scripts": [
+	  "scripts/main.js"
+	],
+  
+  "url": "https://github.com/psyny/FoundryVTT/tree/master/TheyLight/they-light",
+	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/TheyLight/they-light/module.json",
+	"download": "https://github.com/psyny/FoundryVTT/raw/master/TheyLight/they-light.zip"
+}
+
