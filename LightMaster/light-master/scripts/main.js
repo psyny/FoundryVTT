@@ -1,192 +1,104 @@
-Hooks.on('createChatMessage', (chatMessage) => {
-    if (!chatMessage.isRoll || !chatMessage.isContentVisible) {
-        return;
-    }
-
-    closeSheets();
-});
-
-// Confort Shortcuts on default bar
 Hooks.on('getSceneControlButtons', controls => {
-	let control = controls.find(c => c.name === "token") || controls[0];
-  
+	let control = controls.find(c => c.name === "lighting") || controls[5];
+	
 	control.tools.push({
-		name: "perception",
-		title: "Perception",
-		icon: "fas fa-eye",
-		visible: game.settings.get("cozy-player", "toolbarShowSkills"),
+		name: "togglegloballight",
+		title: "Toggle Global Light",
+		icon: "fas fa-globe",
+		visible: true,
 		onClick: () => {
-      control.activeTool = "select";
-      rollSkill('prc');
-			return;
-		}
-	});
-  
-	control.tools.push({
-		name: "insight",
-		title: "Insight",
-		icon: "fas fa-brain",
-		visible: game.settings.get("cozy-player", "toolbarShowSkills"),
-		onClick: () => {
-      control.activeTool = "select";
-      rollSkill('ins');
-			return;
+			canvas.scene.update({globalLight: !canvas.scene.data.globalLight});
 		}
 	});
 	
 	control.tools.push({
-		name: "investigation",
-		title: "Investigation",
-		icon: "fas fa-search",
-		visible: game.settings.get("cozy-player", "toolbarShowSkills"),
+		name: "sunnyday",
+		title: "Sunny Day",
+		icon: "fas fa-sun",
+		visible: true,
 		onClick: () => {
-      control.activeTool = "select";
-      rollSkill('inv');
-			return;
-		}
-	});  
-  
-	control.tools.push({
-		name: "rollinitiative",
-		title: "Roll Initiative",
-		icon: "fas fa-flag-checkered",
-		visible: game.settings.get("cozy-player", "toolbarTurnTools"),
-		onClick: () => {
-      control.activeTool = "select";
-			enterCombatAndRollInitative();
+			setLightState(0.0, "#ffffff", true, false);
 		}
 	});
 	
 	control.tools.push({
-		name: "endturn",
-		title: "End Turn",
-		icon: "fas fa-step-forward",
-		visible: game.settings.get("cozy-player", "toolbarTurnTools"),
+		name: "cloudyday",
+		title: "Cloudy Day",
+		icon: "fas fa-cloud-rain",
+		visible: true,
 		onClick: () => {
-      control.activeTool = "select";
-			endTurn();
+			setLightState(0.5, "#849696", true, false);
+		}
+	});
+	
+	control.tools.push({
+		name: "dusk",
+		title: "Dusk",
+		icon: "fas fa-cloud-sun",
+		visible: true,
+		onClick: () => {
+			setLightState(0.7, "#ebaa6e", true, false);
+		}
+	});
+	
+	control.tools.push({
+		name: "fullmoonnight",
+		title: "Full Moon Night",
+		icon: "fas fa-moon",
+		visible: true,
+		onClick: () => {
+			setLightState(0.8, "#0c1a2e", true, false);
+		}
+	});
+	
+	control.tools.push({
+		name: "darknight",
+		title: "Dark Night",
+		icon: "fas fa-cloud-moon",
+		visible: true,
+		onClick: () => {
+			setLightState(0.9, "#020912", true, false);
+		}
+	});
+	
+	control.tools.push({
+		name: "undergroundmode",
+		title: "Underground Mode",
+		icon: "fas fa-dungeon",
+		visible: true,
+		onClick: () => {
+			setLightState(1.0, "#000000", false, false);
 		}
 	});
 });
 
-// ----------------------------------------------------------------------------------
-async function rollSkill(skillName)
-{
-	var controlled = canvas.tokens.controlled;
-	var actors = [];
-	var tgTkn;
-	
-	if( controlled.length == 0 ) controlled = canvas.tokens.ownedTokens;
-  
-  if( controlled.length == 0 ) {
-    actors.push( game.user.character );
-  } else {
-    for (let i = 0; i < controlled.length; i++) {
-      var tkn = controlled[i];
-      actors.push( tkn.actor );
-    }
-  }
-  
-  for (let i = 0; i < actors.length; i++) {
-    actors[i].rollSkill(skillName);
-  }
+async function setLightState(darkness, lightColor, globalLight, animate = false) {
+	await canvas.scene.setFlag("core", "darknessColor",lightColor);
+	await canvas.scene.update({darkness: darkness, globalLight: globalLight}, {animateDarkness: animate});
 }
 
-async function enterCombatAndRollInitative()
-{
-	
-	/* 
-	// Reference: how to create a combat... useful for when the player wants to start a combat
-	// WIP
-	if(!game.combat) {
-		let scene = game.scenes.viewed;
-		if ( !scene ) return;
-		let cbt = await game.combats.object.create({scene: scene._id});
-		await cbt.activate();
-	}
-	*/
-	
-	if(!game.combat && !game.user.isGM ) {
-    ui.notifications.error("Can't roll initiative: theres no active encounter");
-		return;
-	}
-	
-	// Get Selected Tokens
-	var controlled = canvas.tokens.controlled;
-	var notInCombat = [];
-	var tgTkn;
-	
-	if( controlled.length == 0 )
-	{
-		controlled = canvas.tokens.ownedTokens;
-	}
-	
-	for (let i = 0; i < controlled.length; i++) {
-		var tkn = controlled[i];
-		if( !tkn.inCombat )
-		{
-			tgTkn = tkn;
-			notInCombat.push(tkn.id);
+Hooks.once('init', () => {
+	LightingLayer.prototype.update = function (alpha=null) {
+		const d = canvas.dimensions;
+		const c = this.lighting;
+
+		// Draw darkness layer
+		this._darkness = alpha !== null ? alpha : canvas.scene.data.darkness;
+		c.darkness.clear();
+		const darknessPenalty = 0.99;
+		let darknessColor = canvas.scene.getFlag("core", "darknessColor") || CONFIG.Canvas.darknessColor;
+		if ( typeof darknessColor === "string" ) darknessColor = colorStringToHex(darknessColor);
+		c.darkness.beginFill(darknessColor, this._darkness * darknessPenalty)
+		  .drawRect(0, 0, d.width, d.height)
+		  .endFill();
+
+		// Draw lighting atop the darkness
+		c.lights.clear();
+		for ( let s of canvas.sight.sources.lights.values() ) {
+		  if ( s.darknessThreshold <= this._darkness ) {
+			c.lights.beginFill(s.color, s.alpha).drawPolygon(s.fov).endFill();
+		  }
 		}
-	}
-	
-	
-	// If any token was marked, toggle combat.
-	// For some reason, all selected tokens will be toggled to combat...
-	if(tgTkn)
-	{
-		await tgTkn.toggleCombat();
-	}
-	
-	// Get combatants that was not in combat before
-	var toRoll = [];
-	for (let i = 0; i < notInCombat.length; i++) {
-			var tokenId = notInCombat[i];
-			var combatant = await game.combat.getCombatantByToken(tokenId);
-			if(combatant)
-			{
-				toRoll.push(combatant._id);
-			}
-	}
-	
-	// Roll for selected tokens that was not in combat before
-	if( toRoll.length > 0 )
-	{
-		game.combat.rollInitiative(toRoll);
-	}
-}
+	};
+});
 
-// Close opened sheets
-async function closeSheets()
-{
-  if(game.settings.get("cozy-player", "sheetsActionOnRoll") === "none" ) return;
-  
-	for(appId in ui.windows)
-	{
-		const win = ui.windows[appId];
-		if(win && win.options && win.options.baseApplication == "ActorSheet")
-		{
-      if(game.settings.get("cozy-player", "sheetsActionOnRoll") === "minimize") win.minimize();
-      else win.close();
-		}
-	}
-	return;
-}
-
-
-// Designed to player end current turn if its owner of current turn actor
-async function endTurn()
-{
-  if(!game.combat) {
-    ui.notifications.warn("No active encounter, can't pass turn");
-    return;
-  }
-  
-	var combatant = game.combat.combatant;
-	if(combatant && combatant.actor && combatant.actor.permission == ENTITY_PERMISSIONS["OWNER"] )
-	{
-		game.combat.nextTurn();
-	} else {
-    ui.notifications.warn("It's not your tuen");
-  }
-}
