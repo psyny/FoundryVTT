@@ -9,15 +9,15 @@ Hooks.on('createChatMessage', (chatMessage) => {
 // Confort Shortcuts on default bar
 Hooks.on('getSceneControlButtons', controls => {
 	let control = controls.find(c => c.name === "token") || controls[0];
-	
+  
 	control.tools.push({
 		name: "perception",
 		title: "Perception",
 		icon: "fas fa-eye",
 		visible: game.settings.get("cozy-player", "toolbarShowSkills"),
 		onClick: () => {
-      rollSkill('prc');
       control.activeTool = "select";
+      rollSkill('prc');
 			return;
 		}
 	});
@@ -28,8 +28,8 @@ Hooks.on('getSceneControlButtons', controls => {
 		icon: "fas fa-brain",
 		visible: game.settings.get("cozy-player", "toolbarShowSkills"),
 		onClick: () => {
-      rollSkill('ins');
       control.activeTool = "select";
+      rollSkill('ins');
 			return;
 		}
 	});
@@ -40,8 +40,8 @@ Hooks.on('getSceneControlButtons', controls => {
 		icon: "fas fa-search",
 		visible: game.settings.get("cozy-player", "toolbarShowSkills"),
 		onClick: () => {
-      rollSkill('inv');
       control.activeTool = "select";
+      rollSkill('inv');
 			return;
 		}
 	});  
@@ -107,6 +107,7 @@ async function enterCombatAndRollInitative()
 	*/
 	
 	if(!game.combat && !game.user.isGM ) {
+    ui.notifications.error("Can't roll initiative: theres no active encounter");
 		return;
 	}
 	
@@ -176,9 +177,16 @@ async function closeSheets()
 // Designed to player end current turn if its owner of current turn actor
 async function endTurn()
 {
+  if(!game.combat) {
+    ui.notifications.warn("No active encounter, can't pass turn");
+    return;
+  }
+  
 	var combatant = game.combat.combatant;
 	if(combatant && combatant.actor && combatant.actor.permission == ENTITY_PERMISSIONS["OWNER"] )
 	{
 		game.combat.nextTurn();
-	}
+	} else {
+    ui.notifications.warn("It's not your tuen");
+  }
 }

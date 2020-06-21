@@ -31,6 +31,15 @@ Hooks.once("init", () => {
 		type: Boolean
 	});
   
+  game.settings.register("cozy-player", "toolbarTargetTools", {
+		name: "Left Toolbar: Targets to Chat",
+    hint: "Add a button to send current target selections to chat. Allowing other players to also select them.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
   game.settings.register("cozy-player", "chatActorTokenIntegration", {
 		name: "Chat Integration: Enabled",
     hint: "Enables token selection via chat speaker name click.",

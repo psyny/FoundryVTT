@@ -1,3 +1,21 @@
+// Confort Shortcuts on default bar
+Hooks.on('getSceneControlButtons', controls => {
+	let control = controls.find(c => c.name === "token") || controls[0];
+  
+  control.tools.push({
+		name: "chattargets",
+		title: "Send Targets to Chat",
+		icon: "fas fa-hand-point-down",
+		visible: game.settings.get("cozy-player", "toolbarTargetTools"),
+		onClick: () => {
+      control.activeTool = "select";
+      targetsToChat_dialog();
+			return;
+		}
+	});
+});
+
+
 // Hover attributes
 let _lastHoveredToken = null;
 
@@ -62,16 +80,16 @@ Hooks.on("renderChatMessage", function (chatMessage, html, messageData) {
     return;
   }
   
-  // Adds token selection via sender name click
-  let searchResults = html.find(".message-sender");
-
+  // Adds token interaction via sender name click
   if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
+    let searchResults = html.find(".message-sender");
+    
     if(searchResults.length > 0) {
       searchResults[0].setAttribute("id", messageData.message.speaker.token);
       searchResults[0].setAttribute("hoverable", "true");
-     
-      searchResults.hover(_onChatNameHover, _onChatNameOut);
-      searchResults.click(_onChatNameClick);
+      
+      searchResults[0].classList.add("psnhoverable");
+      searchResults[0].classList.add("psnclickable");
     }
   }
   
@@ -81,14 +99,14 @@ Hooks.on("renderChatMessage", function (chatMessage, html, messageData) {
       //if(chatData.flavor.includes("Attack Roll")) {};
       
       // Build targets message
-      let targetNodes = getTargetsHTML();
+      let targetNodes = getTargetsHTML_nameList();
       if(targetNodes.length > 0) {
         // Create Base Info
         let targetsDiv = document.createElement("div");
-        targetsDiv.setAttribute("class", "targetList");
+        targetsDiv.classList.add("targetList");
         
         let targetsLabel = document.createElement("span");
-        targetsLabel.setAttribute("class", "targetListLabel");
+        targetsLabel.classList.add("targetListLabel");
         targetsLabel.innerHTML = `<b>TARGETS:</b>`;
         targetsDiv.append(targetsLabel);
         
@@ -101,20 +119,25 @@ Hooks.on("renderChatMessage", function (chatMessage, html, messageData) {
         // append back to the message html
         html[0].append(targetsDiv);
         
-        // Append hover functions
+        // Add target all hover function
         if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
-          let targetTokens = html.find(".targetToken");
-          targetTokens.hover(_onChatNameHover, _onChatNameOut);
-          targetTokens.click(_onChatNameClick);
-          
-          let targetLabel = html.find(".targetListLabel");
-          targetLabel.click(_onChatNameClick_all);
+          let targetsLabelList = html.find(".targetListLabel");
+          if(targetsLabelList) targetsLabelList.click(_onChatNameClick_all);
         }
-        
+
         // Deselect all
         if( game.settings.get("cozy-player", "targetsClearOnRoll") ) clearTargets();
       }
     }
+  }
+  
+  // Add hover and functions 
+  if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
+    let hoverableList = html.find(".psnhoverable");
+    if(hoverableList) hoverableList.hover(_onChatNameHover, _onChatNameOut);
+    
+    let clickableList = html.find(".psnclickable");
+    if(clickableList) clickableList.click(_onChatNameClick);
   }
 });
 
@@ -147,7 +170,7 @@ Hooks.on("updateCombat", (combat, update, options, user) => {
 });
 
 // Get Selected Targets (returns a token list)
-function getSelectedTargets()
+function getTargetedTokens()
 {
   let targetList = [];
   
@@ -160,10 +183,51 @@ function getSelectedTargets()
   return targetList;
 }
 
-// Returns HTML nodes with selected targets info
-function getTargetsHTML()
+// Marks an html element to receive hover and click functions
+function markHtmlElement(htmlElement, tokenId)
 {
-  let targets = getSelectedTargets();
+    htmlElement.classList.add("targetToken");
+    htmlElement.classList.add("psnhoverable");
+    htmlElement.classList.add("psnclickable");
+    htmlElement.setAttribute("id", tokenId);
+}
+
+
+
+// Returns HTML node with prepared hover info for a given node: returns element for token IMG
+function getTokenHTML_Img(token, size = 30, borderSize = 0) {
+  if( !token ) return null;
+  
+  let imgSrc = token.img || token.data.img || (token.actor && token.actor.img);
+  if( !imgSrc ) return null;
+  
+  let img = document.createElement("img");
+  img.src = imgSrc;
+  img.width = size;
+  img.height = size;
+  img.border = 0;
+  
+  img.setAttribute("style","border: " + borderSize + "px;");
+  
+  markHtmlElement(img, token.id);
+
+  return img;
+}
+
+
+// Returns HTML node with prepared hover info for a given node: returns element for token name (span)
+function getTokenHTML_Span(token)
+{
+  let newElement = document.createElement("span");
+  markHtmlElement(newElement, token.id);
+  newElement.innerHTML = token.name;
+  return newElement;
+}
+
+// Returns HTML nodes with selected targets info: list of namespan
+function getTargetsHTML_nameList()
+{
+  let targets = getTargetedTokens();
   if(targets.length == 0) {
     return [];
   }
@@ -173,13 +237,88 @@ function getTargetsHTML()
   for(let i = 0; i < targets.length; i++) {
     let token = targets[i];
 
-    let targetDiv = document.createElement("span");
-    targetDiv.setAttribute("class", "targetToken");
-    targetDiv.setAttribute("id", token.id);
-    targetDiv.innerHTML = token.name;
-
-    targetsHTML.push(targetDiv);
+    let spanElement = getTokenHTML_Span(token);
+    targetsHTML.push(spanElement);
   }
 
   return targetsHTML;
+}
+
+
+// Show current targets in chatActorTokenIntegration
+function targetsToChat_dialog() {
+  if(!game.user.isGM) {
+    this.targetsToChat(false);
+    return;
+  }
+  
+  let dialog =  new Dialog({
+      title: "Random Target",
+      content: "<br>Pick only one random target from current selection?<br><br>",
+      buttons: {
+        yes: {
+          icon: '<i class="fas fa-check-circle"></i>',
+          label: "",
+          callback: () => { this.targetsToChat(true) }
+        },
+        no: {
+          icon: '<i class="fas fa-times-circle"></i>',
+          label: "",
+          callback: () => { this.targetsToChat(false) }
+        }
+      },
+      default: "yes"
+    }).render(true);
+}
+
+function targetsToChat(pickRandom = false) {
+  // Get the speaker
+  let speaker = ChatMessage.getSpeaker();
+  if(!speaker.actor && game.user.character) speaker = ChatMessage.getSpeaker({actor: game.user.character});
+  
+  // Get selected tokens
+  let targetedTokens = getTargetedTokens();
+  if( targetedTokens.length == 0) return;
+  
+  // Build message contents
+  let flavor = "";
+  if(pickRandom) {
+    flavor = "Picks a random target";
+    
+    let index = Math.floor( Math.random() * targetedTokens.length );
+    let target = targetedTokens[index];
+    targetedTokens = [];
+    targetedTokens.push(target);
+  } else {
+    flavor = "Points to targets";
+  }
+  
+  let content = "";
+  const imgSize = 30;
+  if( targetedTokens.length > 0 ) {
+
+    content += `<table style="width:100%; border: 0px">`;
+    
+    for(let i = 0; i < targetedTokens.length; i++) {
+      let token = targetedTokens[i];
+      let imgHTML = getTokenHTML_Img(token,imgSize);
+      let nameHTML = getTokenHTML_Span(token);
+      
+      let line = `<tr><td style="width:` + (imgSize + 5) + `px;">`;
+      line += imgHTML.outerHTML + `</td><td>` + nameHTML.outerHTML;
+      line += `</td></tr>`;
+      content += line;
+    }
+    
+    content += `</table>`;
+  }
+
+
+  // Show message
+  let messageData ={
+      flavor: flavor,
+      content: content,
+      speaker: speaker
+  };
+  ChatMessage.create(messageData);
 }
