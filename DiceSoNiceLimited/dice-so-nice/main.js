@@ -749,7 +749,6 @@ function setFixedSettings(configData, setQualityData = false) {
   configData.timeBeforeHide = 3000;
   configData.hideFX = 'fadeOut';
   configData.autoscale = false;
-  configData.scale = 50;
   configData.speed = 1;
   configData.sounds = true;
   
