@@ -39,7 +39,16 @@ Hooks.once("init", () => {
 		default: true,
 		type: Boolean
 	});
-  
+
+  game.settings.register("cozy-player", "toolbarSetHP", {
+		name: "Left Toolbar: Set HP and Temp HP",
+    hint: "Add a button to change one or more tokens HP and Temporary HP.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
   game.settings.register("cozy-player", "chatActorTokenIntegration", {
 		name: "Chat Integration: Enabled",
     hint: "Enables token selection via chat speaker name click.",
