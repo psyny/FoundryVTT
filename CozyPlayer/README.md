@@ -67,10 +67,10 @@ I don't have plans to do localizations soon.
 * Turn Marker: https://github.com/Moerill/token-mold
 
 ## Screenshots
-
-![tools](./screenshots/tools.PNG)
 ![tooltip](./screenshots/tooltip.PNG)
 ![rolltargets](./screenshots/rolltargets.PNG)
+![rolltargets](./screenshots/targetstochat.PNG)
+![tools](./screenshots/tools.PNG)
 
 ## Token Tooltip Update Notes
 **Version**: 1.1.0
