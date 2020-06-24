@@ -2,20 +2,16 @@
 ## Cozy Player
 
 * **Author**: Psyny#0677  (Discord)
-* **Version**: 1.0.0
+* **Version**: 1.1.0
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: D&D 5e
+* **Link**: (https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer)[https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer]
 
-### Link to Foundry VTT download
-* [https://raw.githubusercontent.com/psyny/FoundryVTT/master/CozyPlayer/cozy-player/module.json](https://raw.githubusercontent.com/psyny/FoundryVTT/master/CozyPlayer/cozy-player/module.json)
+### Disclaier
 
-### Description
-This module adds some quality of life tools mainly for players:
-- Add a button to left tool bar for perception, insight and investigation rolls.
-- Add a button to left tool bar for enter combat and roll initiative.
-- Add a button to left tool bar for end turn.
-- Add an option to minimize character sheet when clicking in something that rolls dices (not compatible with betterrolls yet)
-- Add info on hovering mouse over token. Like: HP, AC, Speed, Resourcers and Class Features that have charges like Monks Ki.
+The main purpose of this module was to aid the players of my DnD campaign. The features were directed towards their needs.
+However, while discussing about it with other DM's they took interest in the module, so I've decided to made it public.
+I don't have plans to do localizations soon.
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Add-On Modules"** tab.
@@ -23,18 +19,56 @@ This module adds some quality of life tools mainly for players:
 * Click "Install"
 * Activate the module in your World using **Manage Modules** under the **Game Settings** tab.
 
-## Token Tooltip Update Notes
-**Version**: 1.0.0
-* Tooltips should now properly appear based on the module settings
-* Tooltips should also appear next to a token just outside of the token control hud icons on the the right side regardless of zoom level in the scene.
+## Features
+
+### General
+* Every major feature of this module can be turned on/off.
+* Automaticaly close or minimize sheets when making a roll. 
+
+### Toolbars
+* Toolbar: Buttons to roll common skills: invesgation, insight and perception.
+* Toolbar: Button to add one or multiple tokens to combat AND roll its initiative.
+* Toolbar: Button to pass current turn.
+* Toolbar: Button to set and add HP and temporarily HP of selected tokens.
+
+### Chat-Token integration, targeting and selection
+* Clickable chat names: On the chat, some names (like message sender) is hoverable (for tooltips) and clickable (selects its token).
+* Chat targets on roll: When making a roll, automaticaly attach currented target tokens at the end of the roll info message. If chat integration is turned on, each targeted token token is selectable by anyone by clicking on its name.
+* Clear targets: option to clear targets on making a roll and/or on turn end.
+* Toolbar: Button to show current targets in chat (see chat integration below). If you are a GM, you have the option picking a random one.
+* pressing 'q' will: switch between 'select' and 'target' tools and clear all targets when switching. 
+
+### Tooltip
+* Option to show a tooltip when hovering over a token. It's contents is modular (defined by the GM).
+* Tooltip contents, attributes: Token name, hit points, armor class, speed.
+* Tooltip contents, skills: passive perception, passive insight.
+* Tooltip content, actor resources: Show class resources that have a max value greater than 0.
+* Tooltip content, features: Show actor features that have charges. Like KI, Superiority Dices, etc.
+* Tooltip content, favorites: When using the tidy5esheet you can mark some items as favorites. That can be shown on tooltip also.
+* Tooltip icons: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
+* Tooltip other options: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
+
+### Scene interaction
+* Option to set the max distance that player can interact with a door. A token needs to be selected to interaction occur. GMs will still be able to open or close doors no matter the distance.
+* pressing 'e' will: open/close the door nearest of current selected token.
+* holding 'e' will: focus the camera on current selected token.
 
 ## Known issues
 - A lot of language typos.
 - Automatic sheet closing don't works with betterrolls yet.
 - For some reason, combat encounter needs to be created (dont need to be started) for initiative roll work.
 
+## Token Tooltip Update Notes
+**Version**: 1.1.0
+* Open closest door, tool switching, add temp hp toolbar, and 
+
+**Version**: 1.0.1
+* Tooltips should now properly appear based on the module settings
+* Tooltips should also appear next to a token just outside of the token control hud icons on the the right side regardless of zoom level in the scene.
+
 ## Thanks and Credits
 - Sky for the amazing token tooltip module that was my starting point for this module (in code, inspiration and knowledge): [link](https://github.com/Sky-Captain-13/foundry/tree/master/token-tooltip) 
+- Foundry VTT discord community for always helping me out.
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
