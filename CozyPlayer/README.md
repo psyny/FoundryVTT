@@ -49,7 +49,7 @@ I don't have plans to do localizations soon.
 * Tooltip other **options**: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
 
 ### Scene interaction
-* **Max door interact diatance: ** option to set the max distance that player can interact with a door. A token needs to be selected to interaction occur. GMs will still be able to open or close doors no matter the distance.
+* **Max door interact diatance:** option to set the max distance that player can interact with a door. A token needs to be selected to interaction occur. GMs will still be able to open or close doors no matter the distance.
 * **Hotkey, open nearest door:** pressing 'e' will: open/close the door nearest of current selected token.
 * **Hotkey, center on token:** holding 'e' will: focus the camera on current selected token.
 
