@@ -5,7 +5,7 @@
 * **Version**: 1.1.0
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: D&D 5e
-* **Link**: (https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer)[https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer]
+* **Link**: https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer
 
 ### Disclaimer
 
@@ -74,7 +74,7 @@ I don't have plans to do localizations soon.
 
 ## Token Tooltip Update Notes
 **Version**: 1.1.0
-* Open closest door, tool switching, add temp hp toolbar, and 
+* Open closest door, tool switching and add temp hp toolbar
 
 **Version**: 1.0.1
 * Tooltips should now properly appear based on the module settings
