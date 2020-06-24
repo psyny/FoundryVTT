@@ -102,7 +102,8 @@ Hooks.once("init", () => {
       "friendly": "Friendly Tokens",
       "ally": "Friendly or Observed Tokens",
       "owned": "Owned Tokens",
-			"gm": "GM Only"
+			"gm": "GM Only",
+      "disabled": "Disabled"
 		}
 	});
   

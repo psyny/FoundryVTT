@@ -3,7 +3,7 @@
 	"title": "Cozy Player",
 	"description": "QoL shortcuts for players",
 	"author": "Psyny",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"minimumCoreVersion": "0.6.0",
   
 	"scripts": [

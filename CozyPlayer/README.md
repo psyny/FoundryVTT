@@ -72,14 +72,6 @@ I don't have plans to do localizations soon.
 ![rolltargets](./screenshots/targetstochat.PNG)
 ![tools](./screenshots/tools.PNG)
 
-## Token Tooltip Update Notes
-**Version**: 1.1.0
-* Open closest door, tool switching and add temp hp toolbar
-
-**Version**: 1.0.1
-* Tooltips should now properly appear based on the module settings
-* Tooltips should also appear next to a token just outside of the token control hud icons on the the right side regardless of zoom level in the scene.
-
 ## Thanks and Credits
 - Sky for the amazing token tooltip module that was my starting point for this module (in code, inspiration and knowledge): [link](https://github.com/Sky-Captain-13/foundry/tree/master/token-tooltip) 
 - Foundry VTT discord community for always helping me out.

@@ -1,9 +1,9 @@
 // Class to create and control tooltip data on hover
 class TokenTooltip
 {
-  static tooltips = 0;
-  
   static onHover(object, hovered) {
+    if( game.settings.get("cozy-player", "tooltipVisibility") === "disabled" ) return;
+    
     // Return conditions
     if (  !object 
           || !object.actor
@@ -24,11 +24,11 @@ class TokenTooltip
     } else {
       // Calculate min acess needed
       let minAccess = 0;
-      if( tooltipVisibility === "observed" ) minAccess = 1;
-      else if( tooltipVisibility === "friendly" ) minAccess = 1;
-      else if( tooltipVisibility === "ally" ) minAccess = 2;
+      if( tooltipVisibility === "ally" ) minAccess = 1;
+      else if( tooltipVisibility === "friendly" ) minAccess = 2;
+      else if( tooltipVisibility === "observed" ) minAccess = 2;
       else if( tooltipVisibility === "owned" ) minAccess = 3;
-      else if( tooltipVisibility === "gm" ) {
+      else {
         TokenTooltip._removeToolTip();
         return;
       }
@@ -38,10 +38,10 @@ class TokenTooltip
       if( object.actor.owner && ( minAccess < 4 || tooltipVisibility === "owned" )) {
         showTooltip = true;
       }
-      else if( object.actor.permission == 2 && ( minAccess < 1 || tooltipVisibility === "observed" ) ) {
+      else if( object.actor.permission == 2 && ( minAccess < 2 || tooltipVisibility === "observed" ) ) {
         showTooltip = true;
       }
-      else if( parseInt(object.data.disposition) === CONST.TOKEN_DISPOSITIONS.FRIENDLY && ( minAccess < 1 || tooltipVisibility === "friendly" ) ) {
+      else if( parseInt(object.data.disposition) == CONST.TOKEN_DISPOSITIONS.FRIENDLY && ( minAccess < 2 || tooltipVisibility === "friendly" ) ) {
         showTooltip = true;
       }
     }
@@ -200,10 +200,15 @@ class TokenTooltip
   }
   
   static _addToolTip(tooltipTemplate, object, scale) {
+    // Adjust an offset if a token HUD is opened
+    let xoffset = 0;
+    if( canvas.hud.token.object == object ) xoffset = 50;
+    
+    // Create and position tooltip
     let canvasToken = canvas.tokens.placeables.find((tok) => tok.id === object.id);
     let dmtktooltip = $(`<div class="dmtk-tooltip"></div>`);
     dmtktooltip.css('font-size', scale.font);
-    dmtktooltip.css('left', (canvasToken.worldTransform.tx + ((object.width * 0.9) * canvas.scene._viewPosition.scale)) + 'px');
+    dmtktooltip.css('left', (canvasToken.worldTransform.tx + ((xoffset+(object.w * 1.0)) * canvas.scene._viewPosition.scale)) + 'px');
     dmtktooltip.css('top', (canvasToken.worldTransform.ty + 0) + 'px');
     dmtktooltip.html(tooltipTemplate);
     $('body.game').append(dmtktooltip);
@@ -335,4 +340,12 @@ Hooks.on("deleteToken", (scene, token) => {
 
 Hooks.on("hoverToken", (object, hovered) => {
   TokenTooltip.onHover(object, hovered);
+});
+
+
+Hooks.on("renderTokenHUD", () => {
+  if(canvas.hud.token.object) {
+    TokenTooltip._removeToolTip();
+    TokenTooltip.onHover(canvas.hud.token.object, true);
+  }
 });
