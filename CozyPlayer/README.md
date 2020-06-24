@@ -7,7 +7,7 @@
 * **System Compatibility**: D&D 5e
 * **Link**: (https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer)[https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer]
 
-### Disclaier
+### Disclaimer
 
 The main purpose of this module was to aid the players of my DnD campaign. The features were directed towards their needs.
 However, while discussing about it with other DM's they took interest in the module, so I've decided to made it public.
