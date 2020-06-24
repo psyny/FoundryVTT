@@ -44,7 +44,7 @@ I don't have plans to do localizations soon.
 * Tooltip contents, skills: passive perception, passive insight.
 * Tooltip content, actor resources: Show class resources that have a max value greater than 0.
 * Tooltip content, features: Show actor features that have charges. Like KI, Superiority Dices, etc.
-* Tooltip content, favorites: When using the tidy5esheet you can mark some items as favorites. That can be shown on tooltip also.
+* Tooltip content, favorites: When using the tidy5e sheet you can mark some items as favorites. That can be shown on tooltip also.
 * Tooltip icons: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
 * Tooltip other options: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
 
@@ -57,6 +57,14 @@ I don't have plans to do localizations soon.
 - A lot of language typos.
 - Automatic sheet closing (and many features) wont work with betterrolls module.
 - For some reason, if you aren't a GM, combat encounter needs to be created (dont need to be started) for initiative roll tool work.
+
+## Other modules I use with this one (can explain some decisions I've made)
+* (Chat Portrait)[https://github.com/ShoyuVanilla/FoundryVTT-Chat-Portrait]
+* (Dice-So-Nice)[https://gitlab.com/riccisi/foundryvtt-dice-so-nice]
+* (Easy Target)[https://bitbucket.org/Fyorl/easy-target]
+* (Tidy5e Sheet)[https://github.com/sdenec/tidy5e-sheet]
+* (Token Mold)[https://github.com/Moerill/token-mold]
+* (Turn Marker)[https://github.com/Moerill/token-mold]
 
 ## Token Tooltip Update Notes
 **Version**: 1.1.0
