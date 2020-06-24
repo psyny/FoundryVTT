@@ -26,32 +26,32 @@ I don't have plans to do localizations soon.
 * Automaticaly close or minimize sheets when making a roll. 
 
 ### Toolbars
-* Toolbar: Buttons to roll common skills: invesgation, insight and perception.
-* Toolbar: Button to add one or multiple tokens to combat AND roll its initiative.
-* Toolbar: Button to pass current turn.
-* Toolbar: Button to set and add HP and temporarily HP of selected tokens.
+* **Common skills:** invesgation, insight and perception.
+* **Combat initiative:** add one or multiple tokens to combat AND roll its initiative. And 
+* **Combat pass turn:** pass current turn.
+* **Combat HP and temp HP:**  set and add HP and temporarily HP of selected tokens.
 
 ### Chat-Token integration, targeting and selection
-* Clickable chat names: On the chat, some names (like message sender) is hoverable (for tooltips) and clickable (selects its token).
-* Chat targets on roll: When making a roll, automaticaly attach currented target tokens at the end of the roll info message. If chat integration is turned on, each targeted token token is selectable by anyone by clicking on its name.
-* Clear targets: option to clear targets on making a roll and/or on turn end.
-* Toolbar: Button to show current targets in chat (see chat integration below). If you are a GM, you have the option picking a random one.
-* pressing 'q' will: switch between 'select' and 'target' tools and clear all targets when switching. 
+* **Clickable chat names:** On the chat, some names (like message sender) is hoverable (for tooltips) and clickable (selects its token).
+* **Chat targets on roll:** When making a roll, automaticaly attach currented target tokens at the end of the roll info message. If chat integration is turned on, each targeted token token is selectable by anyone by clicking on its name.
+* **Clear targets:** option to clear targets on making a roll and/or on turn end.
+* **Toolbar, targets to chat:** Button to show current targets in chat (see chat integration below). If you are a GM, you have the option picking a random one.
+* **Hotkey, switch tools:** pressing 'q' will: switch between 'select' and 'target' tools and clear all targets when switching. 
 
 ### Tooltip
 * Option to show a tooltip when hovering over a token. It's contents is modular (defined by the GM).
-* Tooltip contents, attributes: Token name, hit points, armor class, speed.
-* Tooltip contents, skills: passive perception, passive insight.
-* Tooltip content, actor resources: Show class resources that have a max value greater than 0.
-* Tooltip content, features: Show actor features that have charges. Like KI, Superiority Dices, etc.
-* Tooltip content, favorites: When using the tidy5e sheet you can mark some items as favorites. That can be shown on tooltip also.
-* Tooltip icons: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
-* Tooltip other options: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
+* Tooltip contents, **attributes**: Token name, hit points, armor class, speed.
+* Tooltip contents, **skills**: passive perception, passive insight.
+* Tooltip content, **actor resources**: Show class resources that have a max value greater than 0.
+* Tooltip content, **features**: Show actor features that have charges. Like KI, Superiority Dices, etc.
+* Tooltip content, **favorites**: When using the tidy5e sheet you can mark some items as favorites. That can be shown on tooltip also.
+* **Tooltip icons**: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
+* Tooltip other **options**: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
 
 ### Scene interaction
-* Option to set the max distance that player can interact with a door. A token needs to be selected to interaction occur. GMs will still be able to open or close doors no matter the distance.
-* pressing 'e' will: open/close the door nearest of current selected token.
-* holding 'e' will: focus the camera on current selected token.
+* **Max door interact diatance: ** option to set the max distance that player can interact with a door. A token needs to be selected to interaction occur. GMs will still be able to open or close doors no matter the distance.
+* **Hotkey, open nearest door:** pressing 'e' will: open/close the door nearest of current selected token.
+* **Hotkey, center on token:** holding 'e' will: focus the camera on current selected token.
 
 ## Known issues
 - A lot of language typos.
