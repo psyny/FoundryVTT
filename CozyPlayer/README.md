@@ -55,8 +55,8 @@ I don't have plans to do localizations soon.
 
 ## Known issues
 - A lot of language typos.
-- Automatic sheet closing don't works with betterrolls yet.
-- For some reason, combat encounter needs to be created (dont need to be started) for initiative roll work.
+- Automatic sheet closing (and many features) wont work with betterrolls module.
+- For some reason, if you aren't a GM, combat encounter needs to be created (dont need to be started) for initiative roll tool work.
 
 ## Token Tooltip Update Notes
 **Version**: 1.1.0
