@@ -210,7 +210,7 @@ function setHP_dialog() {
   let tokens = getSelectedOrOwnedTokens();
   if(!tokens) return;
   
-  let content = "<b>Affected Tokens:</b> ";
+  let content = "<b>Affected Tokens: </b> ";
   let firstFlag = true;
   for(let i = 0; i < tokens.length; i++ ) {
     if (firstFlag == true ) firstFlag = false;

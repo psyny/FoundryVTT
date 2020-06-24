@@ -247,37 +247,54 @@ function getTargetsHTML_nameList()
 
 // Show current targets in chatActorTokenIntegration
 function targetsToChat_dialog() {
+  // Get selected tokens
+  let targetedTokens = getTargetedTokens();
+  
   if(!game.user.isGM) {
-    this.targetsToChat(false);
+    this.targetsToChat(targetedTokens, false);
     return;
   }
+
+  // Build Text
+  let content = "<b>Current Targets: </b> ";
+  if( targetedTokens.length == 0) content += "none";
+  
+  let firstFlag = true;
+  for(let i = 0; i < targetedTokens.length; i++ ) {
+    if (firstFlag == true ) firstFlag = false;
+    else content += ', ';
+    
+    let token = targetedTokens[i];
+    content += token.name ? token.name : token.actor ? token.actor.data.name : "nameless";
+  }
+  
+  content += "<br><br>Pick only one random target from current selection?<br><br>";
   
   let dialog =  new Dialog({
       title: "Random Target",
-      content: "<br>Pick only one random target from current selection?<br><br>",
+      content: content,
       buttons: {
         yes: {
-          icon: '<i class="fas fa-check-circle"></i>',
+          icon: '<i class="fas fa-check-circle"> yes</i>',
           label: "",
-          callback: () => { this.targetsToChat(true) }
+          callback: () => { this.targetsToChat(targetedTokens, true) }
         },
         no: {
-          icon: '<i class="fas fa-times-circle"></i>',
+          icon: '<i class="fas fa-times-circle"> no, send them all</i>',
           label: "",
-          callback: () => { this.targetsToChat(false) }
+          callback: () => { this.targetsToChat(targetedTokens, false) }
         }
       },
       default: "yes"
     }).render(true);
 }
 
-function targetsToChat(pickRandom = false) {
+function targetsToChat(targetedTokens, pickRandom = false) {
   // Get the speaker
   let speaker = ChatMessage.getSpeaker();
   if(!speaker.actor && game.user.character) speaker = ChatMessage.getSpeaker({actor: game.user.character});
   
   // Get selected tokens
-  let targetedTokens = getTargetedTokens();
   if( targetedTokens.length == 0) return;
   
   // Build message contents

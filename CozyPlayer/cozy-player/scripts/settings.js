@@ -222,4 +222,32 @@ Hooks.once("init", () => {
 		type: Boolean
 	}); 
   
+	game.settings.register("cozy-player", "interactionDist", {
+		name: "Max interaction distancce",
+		hint: "Max distance (in tiles) that a token can interact with a door... 0 will disable max distance (needs app reload).",
+		scope: "world",
+		config: true,
+		default: 1,
+    type: Number,
+    range: {min: 0, max: 20, step: 1}
+	});
+  
+	game.settings.register("cozy-player", "hotkeyInteraction", {
+		name: "Hotkey 'e' for interaction",
+		hint: "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
+	game.settings.register("cozy-player", "hotkeySwitchSelectTarget", {
+		name: "Hotkey 'q' for switch select",
+		hint: "Pressing 'q' will switch between 'select' and 'target' tool.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
 });
