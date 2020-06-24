@@ -59,12 +59,12 @@ I don't have plans to do localizations soon.
 - For some reason, if you aren't a GM, combat encounter needs to be created (dont need to be started) for initiative roll tool work.
 
 ## Other modules I use with this one (can explain some decisions I've made)
-* (Chat Portrait)[https://github.com/ShoyuVanilla/FoundryVTT-Chat-Portrait]
-* (Dice-So-Nice)[https://gitlab.com/riccisi/foundryvtt-dice-so-nice]
-* (Easy Target)[https://bitbucket.org/Fyorl/easy-target]
-* (Tidy5e Sheet)[https://github.com/sdenec/tidy5e-sheet]
-* (Token Mold)[https://github.com/Moerill/token-mold]
-* (Turn Marker)[https://github.com/Moerill/token-mold]
+* Chat Portrait: https://github.com/ShoyuVanilla/FoundryVTT-Chat-Portrait
+* Dice-So-Nice: https://gitlab.com/riccisi/foundryvtt-dice-so-nice
+* Easy Target: https://bitbucket.org/Fyorl/easy-target
+* Tidy5e Sheet: https://github.com/sdenec/tidy5e-sheet
+* Token Mold: https://github.com/Moerill/token-mold
+* Turn Marker: https://github.com/Moerill/token-mold
 
 ## Token Tooltip Update Notes
 **Version**: 1.1.0
