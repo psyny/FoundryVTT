@@ -11,7 +11,7 @@
     "./scripts/main.js"
 	],
   
-  "url": "https://github.com/psyny/FoundryVTT/tree/master/ArmsReach/arms-reach",
+  "url": "https://github.com/psyny/FoundryVTT/tree/master/ArmsReach",
 	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/ArmsReach/arms-reach/module.json",
 	"download": "https://github.com/psyny/FoundryVTT/raw/master/ArmsReach/arms-reach.zip"
 }
