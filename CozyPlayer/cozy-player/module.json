@@ -17,7 +17,7 @@
     "./styles.css"
   ],
   
-  "url": "https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer/cozy-player",
+  "url": "https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer",
 	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/CozyPlayer/cozy-player/module.json",
 	"download": "https://github.com/psyny/FoundryVTT/raw/master/CozyPlayer/cozy-player.zip"
 }
