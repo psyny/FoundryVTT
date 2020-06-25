@@ -1,10 +1,10 @@
-div.dmtk-tooltip {
+div.psn-tooltip {
   visibility: visible;
   width: auto;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #fff;
   text-align: right;
   border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
   font-size: 1.0rem;
   position: absolute;
   z-index: 10;
@@ -13,14 +13,25 @@ div.dmtk-tooltip {
 	padding: 5px 10px;
 }
 
-div.dmtk-tooltip div.section {
+div.psn-tooltip.bg-black {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+
+div.psn-tooltip.bg-white {
+  background-color: rgba(215, 215, 200, 0.9);
+  border-color: rgba(100, 100, 80, 0.9);
+  color: #fff;
+}
+
+div.psn-tooltip div.section {
   display: flex;
   flex-direction: column;
   justify-content: left;
 }
 
-div.dmtk-tooltip div.title {
-  color: rgb(245, 182, 66);
+div.psn-tooltip div.title {
 	padding-right: 0px;
   display: flex;
 	align-items: center;
@@ -28,31 +39,52 @@ div.dmtk-tooltip div.title {
   text-align: center;
 }
 
-div.dmtk-tooltip div.value {
+div.psn-tooltip.bg-black div.title {
+  color: rgb(245, 182, 66);
+}
+
+div.psn-tooltip.bg-white div.title {
+  color: rgb(120, 20, 0);
+}
+
+div.psn-tooltip div.label {
+	align-items: right;
+  justify-content: right;
+  text-align: right;
+	padding-right: 5px;
+}
+
+div.psn-tooltip.bg-black div.label {
+  color: rgb(75, 130, 225);
+}
+
+div.psn-tooltip.bg-white div.label {
+  color: rgb(34, 70, 128);
+}
+
+div.psn-tooltip div.value {
   text-align: left;
 	align-items: left;
   justify-content: left;
 }
 
-div.dmtk-tooltip div.spacer {
+div.psn-tooltip.bg-black div.value {
+  color: rgb(255, 255, 255);
+}
+
+div.psn-tooltip.bg-white div.value {
+  color: rgb(26, 12, 5);
+}
+
+div.psn-tooltip div.spacer {
   width: 10px;
 }
 
-div.dmtk-tooltip div.label {
-	align-items: right;
-  justify-content: right;
-  text-align: right;
-  
-  color: rgb(75, 130, 225);
-
-	padding-right: 5px;
-}
-
-div.dmtk-tooltip div.label i {
+div.psn-tooltip div.label i {
 	padding-right: 10px;
 }
 
-div.dmtk-tooltip.visible {
+div.psn-tooltip.visible {
   visibility: visible;
 }
 
@@ -99,5 +131,14 @@ div.dmtk-tooltip.visible {
   color: rgba(255, 0, 0, 1.0);
 }
 
+div.hiddenMessage {
+  display: none;
+  visibility: none;
+}
+
+div.hiddenTokenId {
+  display: none;
+  visibility: none;
+}
 
 

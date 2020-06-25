@@ -2,7 +2,7 @@
 ## Cozy Player
 
 * **Author**: Psyny#0677  (Discord)
-* **Version**: 1.1.0
+* **Version**: 1.1.2
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: D&D 5e
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer
@@ -33,7 +33,7 @@ I don't have plans to do localizations soon.
 
 ### Chat-Token integration, targeting and selection
 * **Clickable chat names:** On the chat, some names (like message sender) is hoverable (for tooltips) and clickable (selects its token).
-* **Chat targets on roll:** When making a roll, automaticaly attach currented target tokens at the end of the roll info message. If chat integration is turned on, each targeted token token is selectable by anyone by clicking on its name.
+* **Chat targets on roll:** When making a roll, automaticaly attach currented target tokens at the end of the roll info message. If chat integration is turned on, each targeted token token is selectable by other players by clicking on its name.
 * **Clear targets:** option to clear targets on making a roll and/or on turn end.
 * **Toolbar, targets to chat:** Button to show current targets in chat (see chat integration below). If you are a GM, you have the option picking a random one.
 * **Hotkey, switch tools:** pressing 'q' will: switch between 'select' and 'target' tools and clear all targets when switching. 
@@ -44,14 +44,17 @@ I don't have plans to do localizations soon.
 * Tooltip contents, **skills**: passive perception, passive insight.
 * Tooltip content, **actor resources**: Show class resources that have a max value greater than 0.
 * Tooltip content, **features**: Show actor features that have charges. Like KI, Superiority Dices, etc.
+* Tooltip content, **consumables**: Show actor consumables that have charges. Like potions.
 * Tooltip content, **favorites**: When using the tidy5e sheet you can mark some items as favorites. That can be shown on tooltip also.
 * **Tooltip icons**: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
 * Tooltip other **options**: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
+* Tolltip **style**: Two avaliable styles, black and white.
 
 ### Scene interaction
-* **Max door interact distance:** option to set the max distance that player can interact with a door. A token needs to be selected to interaction occur. GMs will still be able to open or close doors no matter the distance.
-* **Hotkey, open nearest door:** pressing 'e' will: open/close the door nearest of current selected token.
-* **Hotkey, center on token:** holding 'e' will: focus the camera on current selected token.
+```diff
+-DOOR ITERACTION TOOLS REMOVED FROM THIS MODULE.
++I've created a separated module to that: (Arms Reach)[https://github.com/psyny/FoundryVTT/tree/master/ArmsReach]
+```
 
 ## Known issues
 - A lot of language typos.

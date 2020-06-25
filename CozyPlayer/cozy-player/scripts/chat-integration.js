@@ -1,3 +1,5 @@
+// Hooks 
+
 // Confort Shortcuts on default bar
 Hooks.on('getSceneControlButtons', controls => {
 	let control = controls.find(c => c.name === "token") || controls[0];
@@ -15,6 +17,156 @@ Hooks.on('getSceneControlButtons', controls => {
 	});
 });
 
+// Prepare messagens before sending
+Hooks.on("preCreateChatMessage", function (data) { 
+  attachTargetsToMessage(data);
+  console.log(data);
+});
+
+// Alters rendered chat message to add the token name hover and click functions
+Hooks.on("renderChatMessage", function (chatMessage, html, messageData) { 
+  // Ignore old messages
+  if (Date.now() - chatMessage.data.timestamp > 5000) {
+    return;
+  }
+  // Adds token interaction via sender name click
+  renderToMessage_SenderFunctions(chatMessage, html, messageData);
+  
+  // Adds attack targets
+  renderToMessage_Targets(html, messageData);
+  
+  // Add hover and functions to all marked HTML elements
+  renderToMessage_AddMouseFunction(html);
+});
+
+function renderToMessage_SenderFunctions(chatMessage, html, messageData) {
+  if( !game.settings.get("cozy-player", "chatActorTokenIntegration") ) { return; }
+  
+  // Adds token interaction via sender name click
+  let searchResults = html.find(".message-sender");
+  
+  if(searchResults && searchResults.length > 0) {
+    let senderToken = messageData.message.speaker.token;
+    
+    // But trying to find the sender
+    if(!senderToken) {
+      let fakeSpeaker = ChatMessage.getSpeaker({actor: messageData.message.speaker.actor});
+      senderToken = fakeSpeaker.token;
+    }
+    
+    if(senderToken) {
+      searchResults[0].setAttribute("id", senderToken);
+      searchResults[0].setAttribute("hoverable", "true");
+      
+      searchResults[0].classList.add("psnhoverable");
+      searchResults[0].classList.add("psnclickable");
+    }
+  }
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+//        MAIN FUNCTIONS
+// ----------------------------------------------------------------------------------------------------
+
+
+// We will build the current targets into a JSON structure. The reason: its the only way i found to pass them thru the message without altering its contents very much.
+// This way I can add the targets to "roll" parameter (the only one that i could find) and it will be send.
+// The "roll" parameter is a JSON dict, so i think as long I keep the targets in a separate key inside this dict I'll not mess with other modules
+function attachTargetsToMessage(messageData) {
+  let settings = game.settings.get("cozy-player", "targetsSendToChat");
+  
+  if( settings === "none" ) { return; }
+  else if( settings === "explicit" && messageData.type != CONST.CHAT_MESSAGE_TYPES.ROLL ) { return; }
+  else if( settings === "implicit" && messageData.type != CONST.CHAT_MESSAGE_TYPES.ROLL && !messageData.content.includes("dice-roll") ) { return; }
+    
+  // Create JSON structure
+  let JSONListOfTargets = targetsJSON();
+  if (JSONListOfTargets == null) return;
+  JSONListOfTargets = `"selectedTargets":` + JSONListOfTargets;
+  
+  // Attach to message content
+  if(messageData.roll) messageData.roll = messageData.roll.substr(0,messageData.roll.length-1) + "," + JSONListOfTargets + "}";
+  else messageData.roll = "{" + JSONListOfTargets + "}";
+}
+
+
+// Search for targets info and add it to the already received message HTML
+function renderToMessage_Targets(html, messageData) {
+  // Return cases
+  if( game.settings.get("cozy-player", "targetsSendToChat") === "none" ) { return; }
+  if( !messageData.message.roll ) { return; }
+  
+  var rollDict = JSON.parse(messageData.message.roll);
+  let targetedTokens = getTokenObjsFromIds(rollDict.selectedTargets);
+  if(!targetedTokens) { return; }
+  
+  // Build targets message
+  let targetNodes = getTokensHTML(targetedTokens);
+  if( !targetNodes || targetNodes.length == 0 ) { return; }
+  
+  // Create Base Info
+  let targetsDiv = document.createElement("div");
+  targetsDiv.classList.add("targetList");
+  
+  let targetsLabel = document.createElement("span");
+  targetsLabel.classList.add("targetListLabel");
+  targetsLabel.innerHTML = `<b>TARGETS:</b>`;
+  targetsDiv.append(targetsLabel);
+  
+  // Add targets
+  for(let i = 0; i < targetNodes.length; i++) {
+    targetNode = targetNodes[i];
+    targetsDiv.append(targetNode);
+  }
+  
+  // append back to the message html
+  html[0].append(targetsDiv);
+  
+  // Add target all hover function
+  if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
+    let targetsLabelList = html.find(".targetListLabel");
+    if(targetsLabelList) targetsLabelList.click(_onChatNameClick_all);
+  }
+
+  // Deselect all
+  if( game.settings.get("cozy-player", "targetsClearOnRoll") ) clearTargets();
+}
+
+
+
+// --------------------------------------- AUX FUNCTIONS
+
+// Returns a JSON string for a list of current targets
+function targetsJSON() {
+  let targetTokens = getTargetedTokens();
+  if(!targetTokens || targetTokens.length == 0) return null;
+  
+  // Create JSON structure
+  let JSONtargets = `[`;
+
+  let firstFlag = true;
+  for(let i = 0; i < targetTokens.length; i++) {
+    if (firstFlag) firstFlag = false;
+    else JSONtargets += ",";
+    JSONtargets += `"` + targetTokens[i].id + `"`;
+  }
+  JSONtargets += "]";
+  
+  return JSONtargets
+}
+
+// Add hover and functions to all marked HTML elements
+function renderToMessage_AddMouseFunction(html) {
+  if( game.settings.get("cozy-player", "targetsSendToChat") === "none" ) { return; }
+
+  // Add hover and functions to all marked elements
+  let hoverableList = html.find(".psnhoverable");
+  if(hoverableList) hoverableList.hover(_onChatNameHover, _onChatNameOut);
+  
+  let clickableList = html.find(".psnclickable");
+  if(clickableList) clickableList.click(_onChatNameClick);
+}
 
 // Hover attributes
 let _lastHoveredToken = null;
@@ -73,73 +225,7 @@ let _onChatNameClick_all = (event) => {
 };
 
 
-// Find sender HTML part and attach listeners to it
-Hooks.on("renderChatMessage", function (chatMessage, html, messageData) { 
-  // Ignore old messages
-  if (Date.now() - chatMessage.data.timestamp > 5000) {
-    return;
-  }
-  
-  // Adds token interaction via sender name click
-  if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
-    let searchResults = html.find(".message-sender");
-    
-    if(searchResults.length > 0) {
-      searchResults[0].setAttribute("id", messageData.message.speaker.token);
-      searchResults[0].setAttribute("hoverable", "true");
-      
-      searchResults[0].classList.add("psnhoverable");
-      searchResults[0].classList.add("psnclickable");
-    }
-  }
-  
-  // Adds attack targets
-  if( game.settings.get("cozy-player", "targetsShowOnRoll") === "all" ) {
-    if(chatMessage.isRoll) {
-      //if(chatData.flavor.includes("Attack Roll")) {};
-      
-      // Build targets message
-      let targetNodes = getTargetsHTML_nameList();
-      if(targetNodes.length > 0) {
-        // Create Base Info
-        let targetsDiv = document.createElement("div");
-        targetsDiv.classList.add("targetList");
-        
-        let targetsLabel = document.createElement("span");
-        targetsLabel.classList.add("targetListLabel");
-        targetsLabel.innerHTML = `<b>TARGETS:</b>`;
-        targetsDiv.append(targetsLabel);
-        
-        // Add targets
-        for(let i = 0; i < targetNodes.length; i++) {
-          targetNode = targetNodes[i];
-          targetsDiv.append(targetNode);
-        }
-        
-        // append back to the message html
-        html[0].append(targetsDiv);
-        
-        // Add target all hover function
-        if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
-          let targetsLabelList = html.find(".targetListLabel");
-          if(targetsLabelList) targetsLabelList.click(_onChatNameClick_all);
-        }
 
-        // Deselect all
-        if( game.settings.get("cozy-player", "targetsClearOnRoll") ) clearTargets();
-      }
-    }
-  }
-  
-  // Add hover and functions 
-  if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
-    let hoverableList = html.find(".psnhoverable");
-    if(hoverableList) hoverableList.hover(_onChatNameHover, _onChatNameOut);
-    
-    let clickableList = html.find(".psnclickable");
-    if(clickableList) clickableList.click(_onChatNameClick);
-  }
-});
 
 // Clear Targets
 function clearTargets() {
@@ -224,18 +310,13 @@ function getTokenHTML_Span(token)
   return newElement;
 }
 
-// Returns HTML nodes with selected targets info: list of namespan
-function getTargetsHTML_nameList()
+// Returns HTML nodes from a list of tokens
+function getTokensHTML(tokens)
 {
-  let targets = getTargetedTokens();
-  if(targets.length == 0) {
-    return [];
-  }
-  
   let targetsHTML = [];
   
-  for(let i = 0; i < targets.length; i++) {
-    let token = targets[i];
+  for(let i = 0; i < tokens.length; i++) {
+    let token = tokens[i];
 
     let spanElement = getTokenHTML_Span(token);
     targetsHTML.push(spanElement);
@@ -243,7 +324,6 @@ function getTargetsHTML_nameList()
 
   return targetsHTML;
 }
-
 
 // Show current targets in chatActorTokenIntegration
 function targetsToChat_dialog() {
@@ -338,4 +418,33 @@ function targetsToChat(targetedTokens, pickRandom = false) {
       speaker: speaker
   };
   ChatMessage.create(messageData);
+}
+
+// Get an array of token objects by a given list of ids
+function getTokenObjsFromIds( idsList ) {
+  let allTokens = canvas.tokens.placeables;
+  let tokenObjs = [];
+  
+  if(idsList.length < 3) {
+    // Small list, lets get one by one
+    for(let i = 0; i < idsList.length; i++) {
+      let tokenId = idsList[i];
+      for(let j = 0; j < allTokens.length; j++) {
+        let token = allTokens[j];
+        if(token.id === tokenId ) tokenObjs.push(token);
+      }
+    }
+  } else {
+    // Big list... lets create a map 
+    let tokenMap = {};
+    for(let i = 0; i < allTokens.length; i++) {
+      let token = allTokens[i];
+      tokenMap[token.id] = token;
+    }
+    for(let i = 0; i < idsList.length; i++) {
+      let tokenId = idsList[i];
+      tokenObjs.push( tokenMap[tokenId] );
+    }
+  }
+  return tokenObjs;
 }

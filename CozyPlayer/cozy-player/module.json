@@ -1,15 +1,14 @@
 {
 	"name": "cozy-player",
 	"title": "Cozy Player",
-	"description": "Some QoL tools for GM and Players. Skills shortcuts, tooltips, targeting and door interactions. Mostly for DnD.",
+	"description": "Some QoL tools for GM and Players. Skills shortcuts, tooltips and targeting. Made for DnD 5ed.",
 	"author": "Psyny",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"minimumCoreVersion": "0.6.0",
   
 	"scripts": [
     "./scripts/settings.js",
     "./scripts/main.js",
-    "./scripts/hotkeys.js",
     "./scripts/token-tooltip.js",
     "./scripts/chat-integration.js"
 	],

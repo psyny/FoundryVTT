@@ -58,22 +58,24 @@ Hooks.once("init", () => {
 		type: Boolean
 	});
   
-  game.settings.register("cozy-player", "targetsShowOnRoll", {
-		name: "Targets: Show on Roll",
-    hint: "Shows current targets on chat when rolling dices. If Chat Integration is enabled, all names shown can be selectable by other players.",
+  game.settings.register("cozy-player", "targetsSendToChat", {
+		name: "Targets: Add to chat",
+    hint: "Attach current targets to chat message in some situations. WARNING! Implicit moode have the greater performance hit, but is more compatible with better rolls module.",
 		scope: "world",
 		config: true,
-		default: "all",
+		default: "explicit",
 		type: String,
 		choices: {
-      "none": "Don't show",
-      "all": "Show for all rolls"
+      "none": "Never",
+      "explicit": "On explicit rolls",
+      "implicit": "On implicit rolls",
+      "all": "On any message"
 		}
 	});
   
   game.settings.register("cozy-player", "targetsClearOnRoll", {
-		name: "Targets: Clear on Roll",
-    hint: "Deselects all targets when rolling for something.",
+		name: "Targets: Clear on Attach",
+    hint: "Deselects all targets when attaching them to a message.",
 		scope: "client",
 		config: true,
 		default: true,
@@ -104,6 +106,18 @@ Hooks.once("init", () => {
       "owned": "Owned Tokens",
 			"gm": "GM Only",
       "disabled": "Disabled"
+		}
+	});
+  
+	game.settings.register("cozy-player", "tooltipStyle", {
+		name: "Token Tooltip: Style",
+		scope: "world",
+		config: true,
+		default: "black",
+		type: String,
+		choices: {
+      "black": "Black",
+      "white": "White"
 		}
 	});
   
@@ -215,6 +229,14 @@ Hooks.once("init", () => {
 		type: Boolean
 	}); 
   
+	game.settings.register("cozy-player", "tooltipConsumables", {
+		name: "Token Tooltip: Show Consumables",
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean
+	});
+  
 	game.settings.register("cozy-player", "tooltipFavs", {
 		name: "Token Tooltip: Show Tidy5esheet favorites",
 		scope: "world",
@@ -222,25 +244,6 @@ Hooks.once("init", () => {
 		default: true,
 		type: Boolean
 	}); 
-  
-	game.settings.register("cozy-player", "interactionDist", {
-		name: "Max interaction distancce",
-		hint: "Max distance (in tiles) that a token can interact with a door... 0 will disable max distance (needs app reload).",
-		scope: "world",
-		config: true,
-		default: 1,
-    type: Number,
-    range: {min: 0, max: 20, step: 1}
-	});
-  
-	game.settings.register("cozy-player", "hotkeyInteraction", {
-		name: "Hotkey 'e' for interaction",
-		hint: "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
-		scope: "world",
-		config: true,
-		default: true,
-		type: Boolean
-	});
   
 	game.settings.register("cozy-player", "hotkeySwitchSelectTarget", {
 		name: "Hotkey 'q' for switch select",

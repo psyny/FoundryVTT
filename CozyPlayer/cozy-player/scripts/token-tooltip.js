@@ -98,20 +98,28 @@ class TokenTooltip
     
     // Feats and Items
     let addFeats = game.settings.get("cozy-player", "tooltipFeats");
+    let addConsumables = game.settings.get("cozy-player", "tooltipConsumables"); 
     let addFavs = game.settings.get("cozy-player", "tooltipFavs");
     
-    if( addFeats || addFavs ) {
+    if( addFeats || addFavs || addConsumables) {
       for(var key in object.actor.data.items) {
         if(resources.list.length >= resources.max) break; // Just a short circuit to not loop throu all inventory uneeded
         
         var item = object.actor.data.items[key];
+        let addFlag = false;
         
-        if( addFeats && item.type == "feat") {
-          if(item.data.uses) TokenTooltip._addVariableValue(resources, item.name, item.img, item.data.uses.value, item.data.uses.max);
+        if( addFeats && item.type === "feat") {
+          if(item.data.uses && item.data.uses.max) addFlag = true;
+        }
+        else if( addConsumables && item.type === "consumable") {
+          if(item.data.uses && item.data.uses.max) addFlag = true;
+        }
+        else if( addFavs && item.flags && item.flags.favtab && item.flags.favtab.isFavorite) {
+          if(item.data.uses) addFlag = true;
         }
         
-        else if( addFavs && item.flags && item.flags.favtab && item.flags.favtab.isFavorite) {
-          if(item.data.uses) TokenTooltip._addVariableValue(resources, item.name, item.img, item.data.uses.value, item.data.uses.max);
+        if(addFlag) {
+          TokenTooltip._addVariableValue(resources, item.name, item.img, item.data.uses.value, item.data.uses.max);
         }
       }
     }
@@ -204,9 +212,14 @@ class TokenTooltip
     let xoffset = 0;
     if( canvas.hud.token.object == object ) xoffset = 50;
     
+    // Style
+    let style = "";
+    if(game.settings.get("cozy-player", "tooltipStyle") === "black" ) style = "bg-black";
+    else if(game.settings.get("cozy-player", "tooltipStyle") === "white" ) style = "bg-white";
+
     // Create and position tooltip
     let canvasToken = canvas.tokens.placeables.find((tok) => tok.id === object.id);
-    let dmtktooltip = $(`<div class="dmtk-tooltip"></div>`);
+    let dmtktooltip = $(`<div class="psn-tooltip ` + style + `"></div>`);
     dmtktooltip.css('font-size', scale.font);
     dmtktooltip.css('left', (canvasToken.worldTransform.tx + ((xoffset+(object.w * 1.0)) * canvas.scene._viewPosition.scale)) + 'px');
     dmtktooltip.css('top', (canvasToken.worldTransform.ty + 0) + 'px');
@@ -215,7 +228,7 @@ class TokenTooltip
   }
   
   static _removeToolTip() {
-    $('.dmtk-tooltip').remove();
+    $('.psn-tooltip').remove();
   }
   
   static _pushToResources(resources, name, img, constant, value, maxValue = 0, extraValue = 0)
@@ -335,7 +348,7 @@ class TokenTooltip
 
 
 Hooks.on("deleteToken", (scene, token) => {
-	$('.dmtk-tooltip').remove();
+	$('.psn-tooltip').remove();
 });
 
 Hooks.on("hoverToken", (object, hovered) => {
