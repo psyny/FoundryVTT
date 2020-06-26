@@ -123,9 +123,30 @@ class TokenTooltip
         }
       }
     }
-
-    // TEMPORARY FIX FOR TOOLTIPS ON OVERWORLD MAP
-    //if (parseInt(info.ac) === 0) return;
+    
+    // Spell Slots
+    if(false) {
+      let spells = object.actor.data.data.spells;
+      let maxSlotLevel = 0;
+      if(spells) {
+        let spellData = {};
+        for( let i = 1; i < 10 ; i++ ) {
+          // Slot info and update max slot level
+          let slotInfo = spells['spell'+i];
+          if(slotInfo.max == 0) break;
+          maxSlotLevel = i;
+          
+          // Save data
+          spellData["level"+i] = { val: slotInfo.val , max: slotInfo.max };
+        }
+        
+        // Check if theres spells to add
+        if( maxSlotLevel > 0 ) {
+          spellData.maxSlotLevel = maxSlotLevel;
+          TokenTooltip._addSlotsInfo(resources, spellData);
+        }
+      }
+    }
     
     // Header and Footer
     let divStart = `<div class="section">`;
@@ -148,6 +169,7 @@ class TokenTooltip
     for (let i = 0; i < maxResourcePerRow; i++) {
       let rowString = `<tr>`;
       
+      // Write cols of this row
       for (let j = 0; j < numberOfCols; j++) {
         // Add a spacer
         if( j > 0 ) rowString += `<td><div class="spacer"></div></td>`;
@@ -178,20 +200,44 @@ class TokenTooltip
         }
         
         // Value
-        if( resource.constant == true ) {
-          rowString += `<td><div class="value">${resource.value}`;
-        } else {
-          rowString += `<td><div class="value">${resource.value} / ${resource.maxValue}`;
-        }
-        
-        // Extra Value
-        if( resource.extraValue > 0 ) rowString += ` (+${resource.extraValue})`;
-        else if( resource.extraValue < 0 ) rowString += ` (-${resource.extraValue})`;
+        if( resource.simple ) {
+          // Most of values have this simple structure
+          if( resource.constant == true ) {
+            rowString += `<td><div class="value">${resource.value}`;
+          } else {
+            rowString += `<td><div class="value">${resource.value} / ${resource.maxValue}`;
+          }
           
-        // Close cell
-        rowString += `</div></td>`;
-      }
-      
+          // Extra Value
+          if( resource.extraValue > 0 ) rowString += ` (+${resource.extraValue})`;
+          else if( resource.extraValue < 0 ) rowString += ` (-${resource.extraValue})`;
+          
+          // Close cell
+          rowString += `</div></td>`;
+        } else {
+          
+          // But some values have a complex non standard structure. Needs to think this part better. For now it only supports spell slots
+          rowString += `<td><table style="width:100%; border: 0px">`;
+          rowString += `<tr>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `</tr>`;
+          rowString += `<tr>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
+          rowString += `</tr>`;
+          rowString += `</table></td>`;
+        }
+
+      } 
+
+      // Close Row
       rowString += `</tr>`;
       
       // Add to variable data
@@ -254,7 +300,30 @@ class TokenTooltip
       constant: constant,
       value: value,
       maxValue: maxValue,
-      extraValue: extraValue
+      extraValue: extraValue,
+      simple: true
+    });
+  }
+  
+  // Add info about spellslots
+  static _addSlotsInfo(resources, slotInfo) {
+    let name = "";
+    let img = "";
+    
+    // Check for Icon and Abbreviation
+    if(!game.settings.get("cozy-player", "tooltipShowIcons") ) {
+      img = null;
+      name = "S.Slots";
+    } else {
+      img = "fas fa-hat-wizard";
+      name = "";
+    }
+    
+    resources.list.push({
+      name: name,
+      img: img,
+      info: slotInfo,
+      simple: false
     });
   }
   

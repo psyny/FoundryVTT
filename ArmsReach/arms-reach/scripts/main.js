@@ -1,5 +1,4 @@
 // Sets the global maximum interaction distance
-
 Hooks.once('init', () => {
   // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
   if( game.settings.get("arms-reach", "globalInteractionDistance") > 0 ) {
@@ -33,8 +32,14 @@ let door_interaction_cameraCentered = false;
 
 document.addEventListener('keydown', evt => {
 	if (evt.key === 'e') {
-    if (!game.settings.get("arms-reach", "hotkeyDoorInteractionCenter")) return;  
-    if(door_interaction_cameraCentered) return;
+    if(!game.settings.get("arms-reach", "hotkeyDoorInteractionCenter")) { return; }
+    if(door_interaction_cameraCentered) { return; }
+    
+    if(   !document.activeElement || 
+      !document.activeElement.attributes ||
+      !document.activeElement.attributes['class'] ||
+      document.activeElement.attributes['class'].value !== "vtt game" 
+    ) { return; }
     
     if( door_interaction_keydown == false ) {
       door_interaction_lastTime = Date.now();
@@ -60,6 +65,12 @@ document.addEventListener('keydown', evt => {
 document.addEventListener('keyup', evt => {
 	if (evt.key === 'e') {
     door_interaction_keydown = false;
+
+    if(   !document.activeElement || 
+          !document.activeElement.attributes ||
+          !document.activeElement.attributes['class'] ||
+          document.activeElement.attributes['class'].value !== "vtt game" 
+      ) { return; }
     
     if(door_interaction_cameraCentered) {
       door_interaction_cameraCentered = false;

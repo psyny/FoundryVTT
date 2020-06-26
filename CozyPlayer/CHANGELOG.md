@@ -2,6 +2,9 @@
 
 ## Version 1.2.x
 
+### 1.2.1
+* Improved behavior for 'q' key: wont activate when sheets is opened and while chating.
+
 ### 1.2.0
 
 * Added more cases where the chat speaker name can be clicked

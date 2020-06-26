@@ -2,7 +2,7 @@
 ## Cozy Player
 
 * **Author**: Psyny#0677  (Discord)
-* **Version**: 1.1.2
+* **Version**: 1.2.1
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: D&D 5e
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer

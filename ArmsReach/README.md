@@ -2,7 +2,7 @@
 # Arms Reach
 
 * **Author**: Psyny#0677  (Discord)
-* **Version**: 1.0.0
+* **Version**: 1.0.1
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: Any
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/ArmsReach
