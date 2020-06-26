@@ -160,8 +160,7 @@ class TokenTooltip
         for( let i = 1; i < 10 ; i++ ) {
           // Slot info and update max slot level
           let slotInfo = spells['spell'+i];
-          if(slotInfo.max == 0) break;
-          maxSlotLevel = i;
+          if(slotInfo.max > 0) maxSlotLevel = i;
           
           // Save data
           spellData["level"+i] = { val: slotInfo.value , max: slotInfo.max };
@@ -252,36 +251,34 @@ class TokenTooltip
           // Spell Table Start
           tipStrings.push(`<td><table style="width: 1px; border: 0px">`);
           
-          // Row StringBuild Function
-          function drawLevelsRow(levelMin, levelMax) {
-            for( let spelllevel = levelMin ; spelllevel <= levelMax ; spelllevel++ ) {
-              let slotsMax = resource.info['level'+spelllevel].max;
-              let slotsLeftAbs = resource.info['level'+spelllevel].val;
-              let slotsLeftPerc = 100.0 * slotsLeftAbs / slotsMax;
-              
-              tipStrings.push(`<td><div class="slot-cell" `);
-              tipStrings.push(`style = "width: ` + slotSize + `px; height: ` + slotSize + `px;"`);
-              tipStrings.push(`><div class="slot-bg"></div><div class="slot-bar `);
-              if( slotsLeftPerc < 50 || ( slotsLeftAbs == 1 && slotsMax > 1 ) ) tipStrings.push(`lowbar`);
-              else tipStrings.push(`highbar`);
-              tipStrings.push(`" style="height: ` + slotsLeftPerc + `%;"`);
-              tipStrings.push(`></div>` + spelllevel + `</div></td>`);
+          // Rows
+          tipStrings.push(`<tr>`);
+          let addedSlots = 0;
+          for( let spelllevel = 1 ; spelllevel <= resource.info.maxSlotLevel ; spelllevel++ ) {
+            let slotsMax = resource.info['level'+spelllevel].max;
+            if( slotsMax == 0 ) continue;
+            else addedSlots += 1;
+            
+            let slotsLeftAbs = resource.info['level'+spelllevel].val;
+            let slotsLeftPerc = 100.0 * slotsLeftAbs / slotsMax;
+            
+            tipStrings.push(`<td><div class="slot-cell" `);
+            tipStrings.push(`style = "width: ` + slotSize + `px; height: ` + slotSize + `px;"`);
+            tipStrings.push(`><div class="slot-bg"></div><div class="slot-bar `);
+            if( slotsLeftPerc < 50 || ( slotsLeftAbs == 1 && slotsMax > 1 ) ) tipStrings.push(`lowbar`);
+            else tipStrings.push(`highbar`);
+            tipStrings.push(`" style="height: ` + slotsLeftPerc + `%;"`);
+            tipStrings.push(`></div>` + spelllevel + `</div></td>`);
+            
+            // close a row after 4 slots
+            if(addedSlots >= 4 && spelllevel < resource.info.maxSlotLevel) {
+              addedSlots = -1;
+              tipStrings.push(`</tr><tr>`);
             }
           }
-          
-          // Row 1 (for slots 1~5)
-          let rowLevels = resource.info.maxSlotLevel > 5 ? 5 : resource.info.maxSlotLevel;
-          tipStrings.push(`<tr>`);
-          drawLevelsRow(1, rowLevels);
           tipStrings.push(`</tr>`);
           
-          // Row 2 (for slots 6~9)
-          if( resource.info.maxSlotLevel > 5 ) {
-            tipStrings.push(`<tr>`);
-            drawLevelsRow(6, resource.info.maxSlotLevel);
-            tipStrings.push(`</tr>`);
-          }
-          
+
           // Spell Table end
           tipStrings.push(`</table></td>`);
         }
