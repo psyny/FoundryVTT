@@ -2,7 +2,7 @@
 ## Cozy Player
 
 * **Author**: Psyny#0677  (Discord)
-* **Version**: 1.2.1
+* **Version**: 1.2.2
 * **Foundry VTT Compatibility**: 0.6.2
 * **System Compatibility**: D&D 5e
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer
@@ -46,6 +46,7 @@ I don't have plans to do localizations soon.
 * Tooltip content, **features**: Show actor features that have charges. Like KI, Superiority Dices, etc.
 * Tooltip content, **consumables**: Show actor consumables that have charges. Like potions.
 * Tooltip content, **favorites**: When using the tidy5e sheet you can mark some items as favorites. That can be shown on tooltip also.
+* Tooltip content, **spell slots**: Show avaliable spell slots.
 * **Tooltip icons**: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
 * Tooltip other **options**: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
 * Tolltip **style**: Two avaliable styles, black and white.
@@ -53,7 +54,7 @@ I don't have plans to do localizations soon.
 ### Scene interaction
 ```diff
 -DOOR ITERACTION TOOLS REMOVED FROM THIS MODULE.
-+I've created a separated module to that: (Arms Reach)[https://github.com/psyny/FoundryVTT/tree/master/ArmsReach]
++I've created a separated module to that: Arms Reach: https://github.com/psyny/FoundryVTT/tree/master/ArmsReach
 ```
 
 ## Known issues
@@ -72,8 +73,9 @@ I don't have plans to do localizations soon.
 ## Screenshots
 ![tooltip](./screenshots/tooltip.PNG)
 ![rolltargets](./screenshots/rolltargets.PNG)
-![rolltargets](./screenshots/targetstochat.PNG)
+![targetstochat](./screenshots/targetstochat.PNG)
 ![tools](./screenshots/tools.PNG)
+![spellsplots](./screenshots/spellslots.PNG)
 
 ## Thanks and Credits
 - Sky for the amazing token tooltip module that was my starting point for this module (in code, inspiration and knowledge): [link](https://github.com/Sky-Captain-13/foundry/tree/master/token-tooltip) 

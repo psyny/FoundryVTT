@@ -2,6 +2,14 @@
 
 ## Version 1.2.x
 
+### 1.2.2
+* **Tooltip**: Added option to show remaining spell slots.
+* **Tooltip**: Tooltip color now can be defined by the player (each player can select its own color)
+* **Tooltip**: Each player can choose if they see the full tooltip, simplified (no feats or items) or none. That option can be different for owned and non-owned tokens. This can help to improve the performance on low end machines. 
+* **Tooltip**: Added a setting to set a delay value between hovering over a token and the tooltip appearing. Setting this value to greater then zero can improve performance by avoiding the problem of tooltip appearing on every mouse movement.
+* **Chat Integration**: Added an option to separately enable/disable chat name hovering and clicking functions.
+* **Send Targets to Chat**: When using 'pick random target' option, all targets are cleared, leaving only the picked one. 
+
 ### 1.2.1
 * Improved behavior for 'q' key: wont activate when sheets is opened and while chating.
 

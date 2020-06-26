@@ -49,9 +49,19 @@ Hooks.once("init", () => {
 		type: Boolean
 	});
 
-  game.settings.register("cozy-player", "chatActorTokenIntegration", {
-		name: "Chat Integration: Enabled",
-    hint: "Enables token selection via chat speaker name click.",
+  // chatActorTokenIntegration
+  game.settings.register("cozy-player", "chatIntegrationHover", {
+		name: "Chat Integration: Hover",
+    hint: "Simulates token hovering when hovering a token name on chat.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
+  game.settings.register("cozy-player", "chatIntegrationClick", {
+		name: "Chat Integration: Click",
+    hint: "Simulates token selection when clicking a token name on chat.",
 		scope: "world",
 		config: true,
 		default: true,
@@ -92,8 +102,8 @@ Hooks.once("init", () => {
 	});
   
 	game.settings.register("cozy-player", "tooltipVisibility", {
-		name: "Token Tooltip: Visibility",
-		hint: "This option determines on which tokens to display a tooltip when moused over for players. The tooltip is always displayed for the GM.",
+		name: "Token Tooltip: Global Visibility",
+		hint: "This option determines on which tokens to display a tooltip when moused over for players. The tooltip is always displayed for the GM. Each player can further limit the visiblity if they choose to do so (next couple of settings).",
 		scope: "world",
 		config: true,
 		default: "owned",
@@ -109,11 +119,39 @@ Hooks.once("init", () => {
 		}
 	});
   
+	game.settings.register("cozy-player", "tooltipOwnedVisibility", {
+		name: "Token Tooltip: Owned Information",
+		hint: "Player Option: How many tooltip information that will be displayed for owned tokens. Setting this option to 'limited' or 'disable' will improve performance on low-end devices.",
+		scope: "client",
+		config: true,
+		default: "ful",
+		type: String,
+		choices: {
+      "non": "Disable Tooltip",
+      "lim": "Limited Information",
+      "ful": "All Information"
+		}
+	});
+  
+	game.settings.register("cozy-player", "tooltipNotOwnedVisibility", {
+		name: "Token Tooltip: Others Information",
+		hint: "Player Option: How many tooltip information that will be displayed for NOT owned tokens. Setting this option to 'limited' or 'disable' will improve performance on low-end devices.",
+		scope: "client",
+		config: true,
+		default: "ful",
+		type: String,
+		choices: {
+      "non": "Disable Tooltip",
+      "lim": "Limited Information",
+      "ful": "All Information"
+		}
+	});
+  
 	game.settings.register("cozy-player", "tooltipStyle", {
 		name: "Token Tooltip: Style",
-		scope: "world",
+		scope: "client",
 		config: true,
-		default: "black",
+		default: "white",
 		type: String,
 		choices: {
       "black": "Black",
@@ -129,6 +167,16 @@ Hooks.once("init", () => {
 		default: 1.0,
     type: Number,
     range: {min: 0.6, max: 2.0, step: 0.2}
+	});
+  
+	game.settings.register("cozy-player", "tooltipDelay", {
+		name: "Token Tooltip: Delay",
+		hint: "Delay (in milliseconds) between hovering an object and showing the tooltip. Setting this value to greater than 0 can help avoid 'tooltip flood'",
+		scope: "world",
+		config: true,
+		default: 200,
+    type: Number,
+    range: {min: 0, max: 2000, step: 200}
 	});
   
 	game.settings.register("cozy-player", "tooltipMaxItems", {
@@ -239,6 +287,14 @@ Hooks.once("init", () => {
   
 	game.settings.register("cozy-player", "tooltipFavs", {
 		name: "Token Tooltip: Show Tidy5esheet favorites",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	}); 
+  
+	game.settings.register("cozy-player", "tooltipSpellSlots", {
+		name: "Token Tooltip: Show spell slots",
 		scope: "world",
 		config: true,
 		default: true,

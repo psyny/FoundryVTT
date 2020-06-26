@@ -20,7 +20,6 @@ Hooks.on('getSceneControlButtons', controls => {
 // Prepare messagens before sending
 Hooks.on("preCreateChatMessage", function (data) { 
   attachTargetsToMessage(data);
-  console.log(data);
 });
 
 // Alters rendered chat message to add the token name hover and click functions
@@ -40,7 +39,7 @@ Hooks.on("renderChatMessage", function (chatMessage, html, messageData) {
 });
 
 function renderToMessage_SenderFunctions(chatMessage, html, messageData) {
-  if( !game.settings.get("cozy-player", "chatActorTokenIntegration") ) { return; }
+  if( !game.settings.get("cozy-player", "chatIntegrationHover") || !game.settings.get("cozy-player", "chatIntegrationClick") ) { return; }
   
   // Adds token interaction via sender name click
   let searchResults = html.find(".message-sender");
@@ -58,8 +57,13 @@ function renderToMessage_SenderFunctions(chatMessage, html, messageData) {
       searchResults[0].setAttribute("id", senderToken);
       searchResults[0].setAttribute("hoverable", "true");
       
-      searchResults[0].classList.add("psnhoverable");
-      searchResults[0].classList.add("psnclickable");
+      if(game.settings.get("cozy-player", "chatIntegrationHover")) {
+        searchResults[0].classList.add("psnhoverable");
+      }
+      
+      if(game.settings.get("cozy-player", "chatIntegrationClick")) {
+        searchResults[0].classList.add("psnclickable");
+      }
     }
   }
 }
@@ -84,6 +88,9 @@ function attachTargetsToMessage(messageData) {
   let JSONListOfTargets = targetsJSON();
   if (JSONListOfTargets == null) return;
   JSONListOfTargets = `"selectedTargets":` + JSONListOfTargets;
+  
+  // Clear targets
+  if( game.settings.get("cozy-player", "targetsClearOnRoll") && settings !== "all" ) clearTargets();
   
   // Attach to message content
   if(messageData.roll) messageData.roll = messageData.roll.substr(0,messageData.roll.length-1) + "," + JSONListOfTargets + "}";
@@ -124,13 +131,10 @@ function renderToMessage_Targets(html, messageData) {
   html[0].append(targetsDiv);
   
   // Add target all hover function
-  if( game.settings.get("cozy-player", "chatActorTokenIntegration") ) {
+  if( game.settings.get("cozy-player", "chatIntegrationClick") ) {
     let targetsLabelList = html.find(".targetListLabel");
     if(targetsLabelList) targetsLabelList.click(_onChatNameClick_all);
   }
-
-  // Deselect all
-  if( game.settings.get("cozy-player", "targetsClearOnRoll") ) clearTargets();
 }
 
 
@@ -161,11 +165,15 @@ function renderToMessage_AddMouseFunction(html) {
   if( game.settings.get("cozy-player", "targetsSendToChat") === "none" ) { return; }
 
   // Add hover and functions to all marked elements
-  let hoverableList = html.find(".psnhoverable");
-  if(hoverableList) hoverableList.hover(_onChatNameHover, _onChatNameOut);
+  if(game.settings.get("cozy-player", "chatIntegrationHover")) {
+    let hoverableList = html.find(".psnhoverable");
+    if(hoverableList) hoverableList.hover(_onChatNameHover, _onChatNameOut);
+  }
   
-  let clickableList = html.find(".psnclickable");
-  if(clickableList) clickableList.click(_onChatNameClick);
+  if(game.settings.get("cozy-player", "chatIntegrationClick")) {
+    let clickableList = html.find(".psnclickable");
+    if(clickableList) clickableList.click(_onChatNameClick);
+  }
 }
 
 // Hover attributes
@@ -178,6 +186,7 @@ let _onChatNameHover = (event) => {
   const token = canvas.tokens.get(event.currentTarget.id);
   if ( token && token.isVisible ) {
     _lastHoveredToken = token;
+    event.fromChat = true;
     token._onHoverIn(event);
   }
 }
@@ -228,11 +237,13 @@ let _onChatNameClick_all = (event) => {
 
 
 // Clear Targets
-function clearTargets() {
+function clearTargets(targetToKeep = null) {
   const targets = game.user.targets.values();
   for(let target = targets.next(); !target.done; target = targets.next())
   {
-    target.value.setTarget(false, { user: game.user, releaseOthers: false });
+    if(!targetToKeep || target.value.id !== targetToKeep) {
+      target.value.setTarget(false, { user: game.user, releaseOthers: false });
+    }
   }
   game.user.targets = new Set();
 }
@@ -273,8 +284,9 @@ function getTargetedTokens()
 function markHtmlElement(htmlElement, tokenId)
 {
     htmlElement.classList.add("targetToken");
-    htmlElement.classList.add("psnhoverable");
-    htmlElement.classList.add("psnclickable");
+    
+    if(game.settings.get("cozy-player", "chatIntegrationHover")) htmlElement.classList.add("psnhoverable");
+    if(game.settings.get("cozy-player", "chatIntegrationClick")) htmlElement.classList.add("psnclickable");
     htmlElement.setAttribute("id", tokenId);
 }
 
@@ -386,6 +398,7 @@ function targetsToChat(targetedTokens, pickRandom = false) {
     let target = targetedTokens[index];
     targetedTokens = [];
     targetedTokens.push(target);
+    clearTargets(target.id);
   } else {
     flavor = "Points to targets";
   }
@@ -415,6 +428,7 @@ function targetsToChat(targetedTokens, pickRandom = false) {
   let messageData ={
       flavor: flavor,
       content: content,
+      targetToKeep: "a",
       speaker: speaker
   };
   ChatMessage.create(messageData);

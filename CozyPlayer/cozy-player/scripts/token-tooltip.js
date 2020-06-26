@@ -1,21 +1,48 @@
 // Class to create and control tooltip data on hover
 class TokenTooltip
 {
+  static lastHoverTime = Date.now();
+  static lastHoverTooltip = "";
+  
+  static delayedHover(object, hovered) {
+    if( Date.now() - TokenTooltip.lastHoverTime < game.settings.get("cozy-player", "tooltipDelay") ) return;
+    TokenTooltip.onHover(object, hovered);
+  }
+
+
   static onHover(object, hovered) {
-    if( game.settings.get("cozy-player", "tooltipVisibility") === "disabled" ) return;
+    if( game.settings.get("cozy-player", "tooltipVisibility") === "disabled" ) { return; }
+    if( object ) {
+      if( object.owner ) {
+        if( game.settings.get("cozy-player", "tooltipOwnedVisibility") === "non" ) { return; }
+      } else {
+        if( game.settings.get("cozy-player", "tooltipNotOwnedVisibility") === "non" ) { return; }
+      }
+    }
     
+    // Update current tooltip
+    if( object && TokenTooltip.lastHoverTooltip === object.id && hovered) { return; }
+    
+    // Limited flags
+    let limitedTooltip = false;
+    if( object.owner && game.settings.get("cozy-player", "tooltipOwnedVisibility") === "lim" ) { limitedTooltip = true; } 
+    else if( !object.owner && game.settings.get("cozy-player", "tooltipNotOwnedVisibility") === "lim" ) { limitedTooltip = true; } 
+
     // Return conditions
     if (  !object 
           || !object.actor
-          || event == undefined
+          //|| event == undefined
+          || !hovered
           )
     {
       TokenTooltip._removeToolTip();
       return;
     }
     
+    // Remove existing tooltip
     TokenTooltip._removeToolTip();
-  
+    TokenTooltip.lastHoverTooltip = object.id;
+
     // Check acess
     let tooltipVisibility = game.settings.get("cozy-player", "tooltipVisibility");
     let showTooltip = false;
@@ -101,7 +128,7 @@ class TokenTooltip
     let addConsumables = game.settings.get("cozy-player", "tooltipConsumables"); 
     let addFavs = game.settings.get("cozy-player", "tooltipFavs");
     
-    if( addFeats || addFavs || addConsumables) {
+    if( !limitedTooltip && ( addFeats || addFavs || addConsumables) ) {
       for(var key in object.actor.data.items) {
         if(resources.list.length >= resources.max) break; // Just a short circuit to not loop throu all inventory uneeded
         
@@ -125,7 +152,7 @@ class TokenTooltip
     }
     
     // Spell Slots
-    if(false) {
+    if( !limitedTooltip && game.settings.get("cozy-player", "tooltipSpellSlots") ) {
       let spells = object.actor.data.data.spells;
       let maxSlotLevel = 0;
       if(spells) {
@@ -137,7 +164,7 @@ class TokenTooltip
           maxSlotLevel = i;
           
           // Save data
-          spellData["level"+i] = { val: slotInfo.val , max: slotInfo.max };
+          spellData["level"+i] = { val: slotInfo.value , max: slotInfo.max };
         }
         
         // Check if theres spells to add
@@ -148,37 +175,39 @@ class TokenTooltip
       }
     }
     
+    // -----------------------------------------------------------------------------------
+    
+    let tipStrings = [];
+    
     // Header and Footer
-    let divStart = `<div class="section">`;
-    const divEnd = `</table></div>`;
+    tipStrings.push(`<div class="section">`);
     
     // Actor name 
     if( game.settings.get("cozy-player", "tooltipShowName") === "actor" ) {
       let name = object.actor ? object.actor.data.name : object.name ? object.name : "nameless";
-      if(name) divStart += `<div class="title"><n>${name}</n></div>`;
+      if(name) tipStrings.push(`<div class="title"><n>${name}</n></div>`);
     } else if (game.settings.get("cozy-player", "tooltipShowName") === "token") {
       let name = object.name ? object.name : object.actor ? object.actor.data.name : "nameless";
-      divStart += `<div class="title"><n>${name}</n></div>`;
+      tipStrings.push(`<div class="title"><n>${name}</n></div>`);
     } 
-    divStart += `<table style="width:100%; border: 0px">`;
+    tipStrings.push(`<table style="width:100%; border: 0px">`);
     
     // Write row-by-row
-    let variableData = ``;
     let rows = 0;
     let numberOfCols = Math.floor( resources.list.length / (maxResourcePerRow + 1 ) ) + 1;
     for (let i = 0; i < maxResourcePerRow; i++) {
-      let rowString = `<tr>`;
+      tipStrings.push(`<tr>`);
       
       // Write cols of this row
       for (let j = 0; j < numberOfCols; j++) {
         // Add a spacer
-        if( j > 0 ) rowString += `<td><div class="spacer"></div></td>`;
-        else rowString += `<td></td>`;
+        if( j > 0 ) tipStrings.push(`<td><div class="spacer"></div></td>`);
+        else tipStrings.push(`<td></td>`);
         
         // Get index
         let index = ( j * maxResourcePerRow ) + i;
         if( index >= resources.list.length ) {
-          rowString += `<td></td><td></td>`;
+          tipStrings.push(`<td></td><td></td>`);
           continue;
         }
         let resource = resources.list[index];
@@ -189,68 +218,87 @@ class TokenTooltip
         {
           // Check if using a default icon or an image
           if( resource.img.substring(0,4) === "fas " ) {
-            rowString += `<td><div class="label"><i class="${resource.img}"></i></div></td>`;
+            tipStrings.push(`<td><div class="label"><i class="${resource.img}"></i></div></td>`);
           } else {
-            rowString += `<td><div class="label"><i><img src="${resource.img}" style="width:${scale.icon};height:${scale.icon};"></i></div></td>`;
+            tipStrings.push(`<td><div class="label"><i><img src="${resource.img}" style="width:${scale.icon};height:${scale.icon};"></i></div></td>`);
           }
         }
         else
         {
-          rowString += `<td><div class="label">${resource.name}:</div></td>`;
+          tipStrings.push(`<td><div class="label">${resource.name}:</div></td>`);
         }
         
         // Value
         if( resource.simple ) {
           // Most of values have this simple structure
           if( resource.constant == true ) {
-            rowString += `<td><div class="value">${resource.value}`;
+            tipStrings.push(`<td><div class="value">${resource.value}`);
           } else {
-            rowString += `<td><div class="value">${resource.value} / ${resource.maxValue}`;
+            tipStrings.push(`<td><div class="value">${resource.value} / ${resource.maxValue}`);
           }
           
           // Extra Value
-          if( resource.extraValue > 0 ) rowString += ` (+${resource.extraValue})`;
-          else if( resource.extraValue < 0 ) rowString += ` (-${resource.extraValue})`;
+          if( resource.extraValue > 0 ) tipStrings.push(` (+${resource.extraValue})`);
+          else if( resource.extraValue < 0 ) tipStrings.push(` (-${resource.extraValue})`);
           
           // Close cell
-          rowString += `</div></td>`;
+          tipStrings.push(`</div></td>`);
         } else {
           
           // But some values have a complex non standard structure. Needs to think this part better. For now it only supports spell slots
-          rowString += `<td><table style="width:100%; border: 0px">`;
-          rowString += `<tr>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `</tr>`;
-          rowString += `<tr>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `<td><div class="slot-cell"><div class="slot-bg"></div><div class="slot-bar"></div>a</div></td>`;
-          rowString += `</tr>`;
-          rowString += `</table></td>`;
+          let tableWidth = resource.info.maxSlotLevel * 32 * scale.value;
+          let slotSize = 18 * scale.value;
+          
+          // Spell Table Start
+          tipStrings.push(`<td><table style="width: 1px; border: 0px">`);
+          
+          // Row StringBuild Function
+          function drawLevelsRow(levelMin, levelMax) {
+            for( let spelllevel = levelMin ; spelllevel <= levelMax ; spelllevel++ ) {
+              let slotsMax = resource.info['level'+spelllevel].max;
+              let slotsLeftAbs = resource.info['level'+spelllevel].val;
+              let slotsLeftPerc = 100.0 * slotsLeftAbs / slotsMax;
+              
+              tipStrings.push(`<td><div class="slot-cell" `);
+              tipStrings.push(`style = "width: ` + slotSize + `px; height: ` + slotSize + `px;"`);
+              tipStrings.push(`><div class="slot-bg"></div><div class="slot-bar `);
+              if( slotsLeftPerc < 50 || ( slotsLeftAbs == 1 && slotsMax > 1 ) ) tipStrings.push(`lowbar`);
+              else tipStrings.push(`highbar`);
+              tipStrings.push(`" style="height: ` + slotsLeftPerc + `%;"`);
+              tipStrings.push(`></div>` + spelllevel + `</div></td>`);
+            }
+          }
+          
+          // Row 1 (for slots 1~5)
+          let rowLevels = resource.info.maxSlotLevel > 5 ? 5 : resource.info.maxSlotLevel;
+          tipStrings.push(`<tr>`);
+          drawLevelsRow(1, rowLevels);
+          tipStrings.push(`</tr>`);
+          
+          // Row 2 (for slots 6~9)
+          if( resource.info.maxSlotLevel > 5 ) {
+            tipStrings.push(`<tr>`);
+            drawLevelsRow(6, resource.info.maxSlotLevel);
+            tipStrings.push(`</tr>`);
+          }
+          
+          // Spell Table end
+          tipStrings.push(`</table></td>`);
         }
 
       } 
 
       // Close Row
-      rowString += `</tr>`;
-      
-      // Add to variable data
-      variableData += rowString;
+      tipStrings.push(`</tr>`);
     }
-    let tooltipTemplate = $(divStart + variableData + divEnd);
+    
+    // Close tooltip
+    tipStrings.push( `</table></div>`);
+    
+    let tooltipTemplate = $(tipStrings.join(""));
     
     // ADD OR REMOVE THE TOOLTIP
-    if (hovered) {
-      TokenTooltip._addToolTip(tooltipTemplate, object, scale);
-    } else {
-      TokenTooltip._removeToolTip();
-    }
+    TokenTooltip._addToolTip(tooltipTemplate, object, scale);
   }
   
   static _addToolTip(tooltipTemplate, object, scale) {
@@ -274,6 +322,7 @@ class TokenTooltip
   }
   
   static _removeToolTip() {
+    TokenTooltip.lastHoverTooltip = "";
     $('.psn-tooltip').remove();
   }
   
@@ -420,8 +469,12 @@ Hooks.on("deleteToken", (scene, token) => {
 	$('.psn-tooltip').remove();
 });
 
+
 Hooks.on("hoverToken", (object, hovered) => {
-  TokenTooltip.onHover(object, hovered);
+  TokenTooltip.lastHoverTime =  Date.now();
+  let delay = game.settings.get("cozy-player", "tooltipDelay");
+  if( delay == 0 ) TokenTooltip.onHover(object, hovered);
+  else setTimeout(function() { TokenTooltip.delayedHover(object, hovered); }, delay);
 });
 
 
