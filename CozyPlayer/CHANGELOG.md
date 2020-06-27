@@ -3,8 +3,7 @@
 ## Version 1.2.x
 
 ### 1.2.3
-* **Hotkey**: 'p' will toggle visibility of player list window (bottom left)
-
+* **Hotkey**: 'p' will toggle visibility of player list window (bottom left).
 
 ### 1.2.2
 * **Tooltip**: Added option to show remaining spell slots.

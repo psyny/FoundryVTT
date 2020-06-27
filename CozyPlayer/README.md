@@ -24,6 +24,7 @@ I don't have plans to do localizations soon.
 ### General
 * Every major feature of this module can be turned on/off.
 * Automaticaly close or minimize sheets when making a roll. 
+* **Hotkey, hide/show player list:** pressing 'p' will: hide/show player list on the left bottom corner.
 
 ### Toolbars
 * **Common skills:** invesgation, insight and perception.
