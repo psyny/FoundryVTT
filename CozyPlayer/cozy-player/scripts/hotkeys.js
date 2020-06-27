@@ -1,11 +1,7 @@
 // Select and Target alternate
 document.addEventListener('keyup', evt => {
   if (evt.key === 'q') {
-    if(   !document.activeElement || 
-          !document.activeElement.attributes ||
-          !document.activeElement.attributes['class'] ||
-          document.activeElement.attributes['class'].value !== "vtt game" 
-      ) { return; }
+    if( !isFocusOnCanvas() ) { return; }
       
     if (!game.settings.get("cozy-player", "hotkeySwitchSelectTarget")) return;   
     
@@ -31,6 +27,39 @@ document.addEventListener('keyup', evt => {
     }
   }
 });
+
+// Hide player listStyleType
+document.addEventListener('keyup', evt => {
+  if (evt.key === 'p') {
+    if( !isFocusOnCanvas() ) { return; }
+    if (!game.settings.get("cozy-player", "hotkeyHidePlayersList")) return;   
+    
+    let playersElement = document.querySelector("#players");
+    if( playersElement ) {
+      if( playersElement.style.visibility === "hidden" ) {
+        playersElement.style.visibility = "visible";
+      } else {
+        playersElement.style.visibility = "hidden";
+      }
+    }
+  }
+});
+
+// Check if active document is the canvas
+function isFocusOnCanvas() {
+  if(   !document.activeElement || 
+        !document.activeElement.attributes ||
+        !document.activeElement.attributes['class'] ||
+        document.activeElement.attributes['class'].value !== "vtt game" 
+    ) 
+  { 
+    return false;
+  }
+  else 
+  { 
+    return true;
+  }
+}
 
 
 // Click on a tool if current toolbar

@@ -310,4 +310,13 @@ Hooks.once("init", () => {
 		type: Boolean
 	});
   
+	game.settings.register("cozy-player", "hotkeyHidePlayersList", {
+		name: "Hotkey 'p': hide player list",
+		hint: "Pressing 'p' hide/show bottom left player list",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
 });

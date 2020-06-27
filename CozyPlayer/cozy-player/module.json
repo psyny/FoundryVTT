@@ -3,7 +3,7 @@
 	"title": "Cozy Player",
 	"description": "Some QoL tools for GM and Players. Skills shortcuts, tooltips and targeting. Made for DnD 5ed.",
 	"author": "Psyny",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"minimumCoreVersion": "0.6.0",
   
 	"scripts": [

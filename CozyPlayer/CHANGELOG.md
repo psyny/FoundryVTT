@@ -2,6 +2,10 @@
 
 ## Version 1.2.x
 
+### 1.2.3
+* **Hotkey**: 'p' will toggle visibility of player list window (bottom left)
+
+
 ### 1.2.2
 * **Tooltip**: Added option to show remaining spell slots.
 * **Tooltip**: Tooltip color now can be defined by the player (each player can select its own color)
