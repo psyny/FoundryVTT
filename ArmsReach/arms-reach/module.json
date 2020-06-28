@@ -3,7 +3,7 @@
 	"title": "Arms Reach",
 	"description": "Allows the GM to limit the distance that a player can interate with a door. And adds a shortkey to interact with rearest door.",
 	"author": "Psyny",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"minimumCoreVersion": "0.6.0",
   
 	"scripts": [

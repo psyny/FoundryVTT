@@ -1,5 +1,12 @@
 # Arms Reach ChangeLog
 
+## Version 1.1.x
+
+### 1.1.0
+* **Hotkeys**: Added compatibility with D&D5e Dark Mode module. 
+* **Improvement**: Improved door distance calculation precision.
+* **New Feature**: Double tapping a movement key on the direction of a door will interact with it.
+
 ## Version 1.0.x
 
 ### 1.0.1

@@ -26,6 +26,7 @@ The iteraction distance is measure by the distance between a token and the door.
 * Enable the GM to select the maximum distancce that players can interact with a door (needs a token selected) (DM bypass this limitation)
 * Pressing 'e' opens/closes a door nearest of current selected token
 * Holding 'e' centers the camera on current selected token
+* Double tapping movement on the direction of a door will interact with it
 
 ## Known issues
 None up until now.

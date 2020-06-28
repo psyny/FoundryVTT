@@ -15,12 +15,21 @@ Hooks.once("init", () => {
 		config: true,
 		default: 1,
     type: Number,
-    range: {min: 0, max: 50, step: 1}
+    range: {min: 0, max: 50, step: 0.5}
 	});
   
   game.settings.register("arms-reach", "hotkeyDoorInteraction", {
 		name: "Hotkey 'e' for interaction",
 		hint: "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+  
+  game.settings.register("arms-reach", "hotkeyDoorInteractionDT", {
+		name: "Double tap for interaction",
+		hint: "Double tapping move key on the direction of a door will interact with it.",
 		scope: "world",
 		config: true,
 		default: true,
@@ -33,7 +42,7 @@ Hooks.once("init", () => {
 		config: true,
 		default: 1,
     type: Number,
-    range: {min: 0, max: 10, step: 1}
+    range: {min: 0, max: 10, step: 0.5}
 	});
   
   game.settings.register("arms-reach", "hotkeyDoorInteractionCenter", {
