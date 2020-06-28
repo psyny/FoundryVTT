@@ -2,6 +2,10 @@
 
 ## Version 1.2.x
 
+### 1.2.4
+* **Hotkeys**: Added compatibility with D&D5e Dark Mode module. 
+* **Tooltip**: Fixed icon of passive perception: now its the eye icon (as intended), not the magnifier icon.
+
 ### 1.2.3
 * **Hotkey**: 'p' will toggle visibility of player list window (bottom left).
 

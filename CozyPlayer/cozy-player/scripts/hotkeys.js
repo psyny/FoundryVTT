@@ -50,7 +50,7 @@ function isFocusOnCanvas() {
   if(   !document.activeElement || 
         !document.activeElement.attributes ||
         !document.activeElement.attributes['class'] ||
-        document.activeElement.attributes['class'].value !== "vtt game" 
+        document.activeElement.attributes['class'].value.substr(0,8) !== "vtt game" 
     ) 
   { 
     return false;

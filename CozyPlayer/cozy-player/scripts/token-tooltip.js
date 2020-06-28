@@ -105,7 +105,7 @@ class TokenTooltip
     
     // Passive Pereception
     if(game.settings.get("cozy-player", "tooltipPassivePerception"))
-      TokenTooltip._addConstValue_NANcheck(resources, "passive perception", "fas fa-search", object.actor.data.data.skills.prc.passive);
+      TokenTooltip._addConstValue_NANcheck(resources, "passive perception", "fas fa-eye", object.actor.data.data.skills.prc.passive);
     
     // Passive Insight
     if(game.settings.get("cozy-player", "tooltipPassiveInsight"))

@@ -177,7 +177,7 @@ async function closeSheets()
 	for(appId in ui.windows)
 	{
 		const win = ui.windows[appId];
-		if(win && win.options && win.options.baseApplication == "ActorSheet")
+		if(win && win.options && win.options.baseApplication === "ActorSheet")
 		{
       if(game.settings.get("cozy-player", "sheetsActionOnRoll") === "minimize") win.minimize();
       else win.close();
