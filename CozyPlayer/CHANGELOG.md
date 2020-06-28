@@ -2,6 +2,10 @@
 
 ## Version 1.2.x
 
+### 1.2.5
+* **Tooltip**: Added an option to show passive investigation.
+* **Tooltip**: Added an option to hide spell slots if maximum avaliable slots is if a choosen value (besides zero). This is a workaround for sheets that wont let you set max spell slots to zero.
+
 ### 1.2.4
 * **Hotkeys**: Added compatibility with D&D5e Dark Mode module. 
 * **Tooltip**: Fixed icon of passive perception: now its the eye icon (as intended), not the magnifier icon.

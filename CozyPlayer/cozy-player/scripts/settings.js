@@ -261,6 +261,14 @@ Hooks.once("init", () => {
 		type: Boolean
 	}); 
   
+	game.settings.register("cozy-player", "tooltipPassiveInvestigation", {
+		name: "Token Tooltip: Show Passive Investigation",
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean
+	}); 
+  
 	game.settings.register("cozy-player", "tooltipResources", {
 		name: "Token Tooltip: Show Actor Resources",
 		scope: "world",
@@ -300,6 +308,16 @@ Hooks.once("init", () => {
 		default: true,
 		type: Boolean
 	}); 
+  
+	game.settings.register("cozy-player", "tooltipSpellSlotsIgnore", {
+		name: "Token Tooltip: Don't show slots of ",
+		hint: "Don't show spell slots if slot maximum value is this. This option only exists as a workaround for sheets that wont let you set spell slot maximum value to zero.",
+		scope: "world",
+		config: true,
+		default: 9,
+    type: Number,
+    //range: {min: 0.6, max: 2.0, step: 0.2}
+	});
   
 	game.settings.register("cozy-player", "hotkeySwitchSelectTarget", {
 		name: "Hotkey 'q' for switch select",

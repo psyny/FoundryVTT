@@ -111,6 +111,10 @@ class TokenTooltip
     if(game.settings.get("cozy-player", "tooltipPassiveInsight"))
       TokenTooltip._addConstValue_NANcheck(resources, "passive insight", "fas fa-brain", object.actor.data.data.skills.ins.passive);
     
+    // Passive Investigation
+    if(game.settings.get("cozy-player", "tooltipPassiveInvestigation"))
+      TokenTooltip._addConstValue_NANcheck(resources, "passive investigation", "fas fa-search", object.actor.data.data.skills.inv.passive);
+    
     // Resources
     if(game.settings.get("cozy-player", "tooltipResources")) {
       let actorResource = object.actor.data.data.resources.primary;
@@ -156,11 +160,13 @@ class TokenTooltip
       let spells = object.actor.data.data.spells;
       let maxSlotLevel = 0;
       if(spells) {
+        let ignoreSlotMax = game.settings.get("cozy-player", "tooltipSpellSlotsIgnore");
+        
         let spellData = {};
         for( let i = 1; i < 10 ; i++ ) {
           // Slot info and update max slot level
           let slotInfo = spells['spell'+i];
-          if(slotInfo.max > 0) maxSlotLevel = i;
+          if(slotInfo.max > 0 && slotInfo.max != ignoreSlotMax) maxSlotLevel = i;
           
           // Save data
           spellData["level"+i] = { val: slotInfo.value , max: slotInfo.max };
@@ -247,6 +253,7 @@ class TokenTooltip
           // But some values have a complex non standard structure. Needs to think this part better. For now it only supports spell slots
           let tableWidth = resource.info.maxSlotLevel * 32 * scale.value;
           let slotSize = 18 * scale.value;
+          let ignoreSlotMax = game.settings.get("cozy-player", "tooltipSpellSlotsIgnore");
           
           // Spell Table Start
           tipStrings.push(`<td><table style="width: 1px; border: 0px">`);
@@ -256,7 +263,7 @@ class TokenTooltip
           let addedSlots = 0;
           for( let spelllevel = 1 ; spelllevel <= resource.info.maxSlotLevel ; spelllevel++ ) {
             let slotsMax = resource.info['level'+spelllevel].max;
-            if( slotsMax == 0 ) continue;
+            if( slotsMax == 0 || slotsMax == ignoreSlotMax ) continue;
             else addedSlots += 1;
             
             let slotsLeftAbs = resource.info['level'+spelllevel].val;
