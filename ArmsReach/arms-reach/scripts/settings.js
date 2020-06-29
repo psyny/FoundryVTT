@@ -27,13 +27,14 @@ Hooks.once("init", () => {
 		type: Boolean
 	});
   
-  game.settings.register("arms-reach", "hotkeyDoorInteractionDT", {
-		name: "Double tap for interaction",
-		hint: "Double tapping move key on the direction of a door will interact with it.",
+  game.settings.register("arms-reach", "hotkeyDoorInteractionDelay", {
+		name: "Interaction double tap delay",
+		hint: "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
 		scope: "world",
 		config: true,
-		default: true,
-		type: Boolean
+		default: 200,
+    type: Number,
+    range: {min: 0, max: 750, step: 50}
 	});
   
 	game.settings.register("arms-reach", "doorInteractionDistance", {

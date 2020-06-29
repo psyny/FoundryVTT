@@ -2,6 +2,9 @@
 
 ## Version 1.1.x
 
+### 1.1.1
+* **Double Tap**: Instead of setting double tap to on/off, added the option to select the delay between the key presses. 
+
 ### 1.1.0
 * **Hotkeys**: Added compatibility with D&D5e Dark Mode module. 
 * **Improvement**: Improved door distance calculation precision.

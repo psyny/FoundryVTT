@@ -104,22 +104,22 @@ document.addEventListener('keyup', evt => {
 // Double Tap to open nearest door -------------------------------------------------
 document.addEventListener('keyup', evt => {
 	if (evt.key === 'ArrowUp' || evt.key === 'w') {
-    if(!game.settings.get("arms-reach", "hotkeyDoorInteractionDT")) { return; }
+    if(game.settings.get("arms-reach", "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('up', 0, -0.5);
   }
   
 	if (evt.key === 'ArrowDown' || evt.key === 's') {
-    if(!game.settings.get("arms-reach", "hotkeyDoorInteractionDT")) { return; }
+    if(game.settings.get("arms-reach", "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('down', 0, +0.5);
   }
   
 	if (evt.key === 'ArrowRight' || evt.key === 'd') {
-    if(!game.settings.get("arms-reach", "hotkeyDoorInteractionDT")) { return; }
+    if(game.settings.get("arms-reach", "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('right', +0.5, 0);
   }
   
 	if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-    if(!game.settings.get("arms-reach", "hotkeyDoorInteractionDT")) { return; }
+    if(game.settings.get("arms-reach", "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('left', -0.5, 0);
   }
 });
@@ -128,7 +128,7 @@ function ifStuckInteract(key, offsetx, offsety) {
   let character = getFirstPlayerToken();
   if(!character) return;
   
-  if( Date.now() - ArmsReachVariables.lastData[key] > 300 ) {
+  if( Date.now() - ArmsReachVariables.lastData[key] > game.settings.get("arms-reach", "hotkeyDoorInteractionDelay") ) {
     ArmsReachVariables.lastData.x = character.x;
     ArmsReachVariables.lastData.y = character.y;
     ArmsReachVariables.lastData[key] = Date.now();
