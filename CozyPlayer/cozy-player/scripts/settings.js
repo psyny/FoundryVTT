@@ -297,6 +297,15 @@ Hooks.once("init", () => {
 		name: "Token Tooltip: Show Tidy5esheet favorites",
 		scope: "world",
 		config: true,
+		default: false,
+		type: Boolean
+	}); 
+  
+	game.settings.register("cozy-player", "tooltipCaseByCase", {
+		name: "Token Tooltip: case-by-case",
+    hint: "Each item have it's own tooltip display settings at: edit item -> description -> tooltip",
+		scope: "world",
+		config: true,
 		default: true,
 		type: Boolean
 	}); 

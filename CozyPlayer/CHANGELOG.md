@@ -1,5 +1,10 @@
 # Cozy Player ChangeLog
 
+## Version 1.3.x
+
+### 1.3.0
+* **Tooltip**: Added "case-by-case" option. Each item, under edit item -> description -> **tooltip display**, can be set to "Hidden", "Charges" or "Quantity" to be represented on the tooltip. 
+
 ## Version 1.2.x
 
 ### 1.2.5

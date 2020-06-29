@@ -47,6 +47,7 @@ I don't have plans to do localizations soon.
 * Tooltip content, **features**: Show actor features that have charges. Like KI, Superiority Dices, etc.
 * Tooltip content, **consumables**: Show actor consumables that have charges. Like potions.
 * Tooltip content, **favorites**: When using the tidy5e sheet you can mark some items as favorites. That can be shown on tooltip also.
+* Tooltip content, **case by case**: Each item, under edit item -> description -> **tooltip display**, can be set to "Hidden", "Charges" or "Quantity" to be represented on the tooltip. 
 * Tooltip content, **spell slots**: Show avaliable spell slots.
 * **Tooltip icons**: Option to show icons instead of names for identify contents. If no icon is avaliable, the name will be shown anyway (like with class resources). If the name is too long it will be abbreviated. 
 * Tooltip other **options**: display based on token permissions, scaleable tooltip size, max number of items on tooltip, max number of items per row, and more.
@@ -77,6 +78,7 @@ I don't have plans to do localizations soon.
 ![targetstochat](./screenshots/targetstochat.PNG)
 ![tools](./screenshots/tools.PNG)
 ![spellsplots](./screenshots/spellslots.PNG)
+![casebycase](./screenshots/casebycase.PNG)
 
 ## Thanks and Credits
 - Sky for the amazing token tooltip module that was my starting point for this module (in code, inspiration and knowledge): [link](https://github.com/Sky-Captain-13/foundry/tree/master/token-tooltip) 

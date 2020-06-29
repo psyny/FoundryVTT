@@ -8,6 +8,8 @@ class TokenTooltip
     if( Date.now() - TokenTooltip.lastHoverTime < game.settings.get("cozy-player", "tooltipDelay") ) return;
     TokenTooltip.onHover(object, hovered);
   }
+  
+  static forbiddenToolTipTypes = { class: true, spell: true , loot: true};
 
 
   static onHover(object, hovered) {
@@ -131,26 +133,42 @@ class TokenTooltip
     let addFeats = game.settings.get("cozy-player", "tooltipFeats");
     let addConsumables = game.settings.get("cozy-player", "tooltipConsumables"); 
     let addFavs = game.settings.get("cozy-player", "tooltipFavs");
+    let addCases = game.settings.get("cozy-player", "tooltipCaseByCase");
     
-    if( !limitedTooltip && ( addFeats || addFavs || addConsumables) ) {
+    if( !limitedTooltip && ( addFeats || addFavs || addConsumables || addCases) ) {
       for(var key in object.actor.data.items) {
         if(resources.list.length >= resources.max) break; // Just a short circuit to not loop throu all inventory uneeded
         
         var item = object.actor.data.items[key];
         let addFlag = false;
+        let hasCharges = true;
         
-        if( addFeats && item.type === "feat") {
-          if(item.data.uses && item.data.uses.max) addFlag = true;
+        if ( addCases && item.data && item.data.cptooltipmode && item.data.cptooltipmode !== "hid" ) {
+          if(item.data.cptooltipmode === "qty") hasCharges = false;
+          addFlag = true;
+        }
+        else if( addFeats && item.type === "feat") {
+          addFlag = true;
         }
         else if( addConsumables && item.type === "consumable") {
-          if(item.data.uses && item.data.uses.max) addFlag = true;
+          addFlag = true;
         }
         else if( addFavs && item.flags && item.flags.favtab && item.flags.favtab.isFavorite) {
-          if(item.data.uses) addFlag = true;
+          addFlag = true;
         }
         
         if(addFlag) {
-          TokenTooltip._addVariableValue(resources, item.name, item.img, item.data.uses.value, item.data.uses.max);
+          if(hasCharges) 
+          {
+            if(item.data.uses && item.data.uses.max) {
+              TokenTooltip._addVariableValue(resources, item.name, item.img, item.data.uses.value, item.data.uses.max);
+            }
+          }
+          else
+          {
+              TokenTooltip._addConstValue(resources, item.name, item.img, item.data.quantity);
+          }
+
         }
       }
     }
@@ -488,3 +506,46 @@ Hooks.on("renderTokenHUD", () => {
     TokenTooltip.onHover(canvas.hud.token.object, true);
   }
 });
+
+
+// ---------------------------------- Item options
+
+Hooks.once('ready', function () {
+    let itemSheets = {};
+    Object.values(CONFIG.Item.sheetClasses).forEach(itemType => Object.keys(itemType).forEach(sheetName => itemSheets[sheetName] = 1));
+    Object.keys(itemSheets).forEach(sheetName => Hooks.on(`render${sheetName.split(".")[1]}`, (app, html, data) => {
+        addItemTooltipConfigTab(app, html, data);
+    }));    
+});
+
+function addItemTooltipConfigTab(app, html, data) {
+  // Usefull
+  let item = app.object;
+  
+  // Non applicable
+  if (TokenTooltip.forbiddenToolTipTypes[item.type]) return; 
+
+  // Add Tooltip Behavior to properties list
+  let itemProperties = html.find(`.sheet-body .item-properties`);
+  let tooltip = [];
+  let selected = !item.data.data.cptooltipmode ? "hid" : item.data.data.cptooltipmode;
+
+  function pushOption(val, lab) {
+    tooltip.push(`<option value="` + val + `" `);
+    if(selected===val) {
+      tooltip.push(`selected `);
+    }
+    tooltip.push(`>` + lab + `</option>`);
+  }
+
+  tooltip.push(`<div class="form-group">`);
+  tooltip.push(`<label>Tooltip Display</label>`);
+  tooltip.push(`<select class="cptooltipmodeform" name ="data.cptooltipmode">`);
+  pushOption("hid", "Hidden");
+  pushOption("cha", "Charges");
+  pushOption("qty", "Quantity");
+  tooltip.push(`</select></div>`);
+
+  itemProperties.prepend(tooltip.join(""));
+}
+
