@@ -333,7 +333,7 @@ export class Dice3D {
      * @private
      */
     _buildCanvas() {
-        this.canvas = $('<div id="dice-box-canvas" style="position: absolute; left: 0; top: 0; z-index: 1000; pointer-events: none;"></div>');
+        this.canvas = $('<div id="dice-box-canvas" style="position: absolute; left: 100px; top: 0; z-index: 1000; pointer-events: none;"></div>');
         this.canvas.appendTo($('body'));
         this._resizeCanvas();
     }
@@ -343,10 +343,15 @@ export class Dice3D {
      *
      * @private
      */
+     // PSY
     _resizeCanvas() {
         const sidebarWidth = $('#sidebar').width();
-        this.canvas.width(window.innerWidth - sidebarWidth + 'px');
-        this.canvas.height(window.innerHeight - 1 + 'px');
+        
+        this.canvas[0].style['z-index'] = 10;
+        this.canvas[0].style.left = '120px';
+        this.canvas[0].style.right = sidebarWidth + 'px';
+        this.canvas[0].style.top = '70px';
+        this.canvas[0].style.bottom = '70px';
     }
 
     /**
