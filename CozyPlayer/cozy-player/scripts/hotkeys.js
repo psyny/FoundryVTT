@@ -29,19 +29,57 @@ document.addEventListener('keyup', evt => {
 });
 
 // Hide player listStyleType
+let gb_playersList_visibility = true;
+var gb_playersList_dom = null;
+
+function playersListToggle(domObj) {
+  if(!domObj) return;
+
+  if(!domObj.style || !domObj.style.visibility || domObj.style.visibility === "") {
+    if(gb_playersList_visibility == true) domObj.style.visibility = "visible";
+    else domObj.style.visibility = "hidden";
+  } else {
+    if(domObj.style.visibility === "hidden" && gb_playersList_visibility == true) domObj.style.visibility = "visible";
+    else if(domObj.style.visibility === "visible" && gb_playersList_visibility == false) domObj.style.visibility = "hidden";
+  }
+}
+
+Hooks.on('renderPlayerList', () => {
+  // Select the node that will be observed for mutations
+  const targetNode = document.getElementById('players');
+  if(!targetNode) return;
+
+  // Options for the observer (which mutations to observe)
+  const config = { attributes: true, childList: true, subtree: true };
+
+  // Callback function to execute when mutations are observed
+  const callback = function(mutationsList, observer) {
+    for(let mutation of mutationsList) {
+      if(mutation.type === "attributes") {
+        playersListToggle(targetNode);
+      }
+    }
+  };
+
+  // Create an observer instance linked to the callback function
+  const observer = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
+  
+  // Check state
+  playersListToggle(targetNode);
+});
+
 document.addEventListener('keyup', evt => {
   if (evt.key === 'p') {
     if( !isFocusOnCanvas() ) { return; }
     if (!game.settings.get("cozy-player", "hotkeyHidePlayersList")) return;   
     
+    gb_playersList_visibility = !gb_playersList_visibility;
+    
     let playersElement = document.querySelector("#players");
-    if( playersElement ) {
-      if( playersElement.style.visibility === "hidden" ) {
-        playersElement.style.visibility = "visible";
-      } else {
-        playersElement.style.visibility = "hidden";
-      }
-    }
+    playersListToggle(playersElement);
   }
 });
 

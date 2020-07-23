@@ -303,7 +303,7 @@ Hooks.once("init", () => {
   
 	game.settings.register("cozy-player", "tooltipCaseByCase", {
 		name: "Token Tooltip: case-by-case",
-    hint: "Each item have it's own tooltip display settings at: edit item -> description -> tooltip",
+    hint: "Each item have it's own tooltip display settings at: edit item -> description -> tooltip display",
 		scope: "world",
 		config: true,
 		default: true,

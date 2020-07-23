@@ -439,6 +439,8 @@ function getTokenObjsFromIds( idsList ) {
   let allTokens = canvas.tokens.placeables;
   let tokenObjs = [];
   
+  if(!idsList) return tokenObjs;
+  
   if(idsList.length < 3) {
     // Small list, lets get one by one
     for(let i = 0; i < idsList.length; i++) {

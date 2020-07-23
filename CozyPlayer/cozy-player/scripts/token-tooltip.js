@@ -9,6 +9,10 @@ class TokenTooltip
     TokenTooltip.onHover(object, hovered);
   }
   
+  static hoverTimeout() {
+    if( canvas.activeLayer._hover == null ) TokenTooltip._removeToolTip();
+  }
+  
   static forbiddenToolTipTypes = { class: true, spell: true , loot: true};
 
 
@@ -516,6 +520,10 @@ Hooks.once('ready', function () {
     Object.keys(itemSheets).forEach(sheetName => Hooks.on(`render${sheetName.split(".")[1]}`, (app, html, data) => {
         addItemTooltipConfigTab(app, html, data);
     }));    
+    
+    TokenTooltip._removeToolTip();
+    
+    setInterval(function() { TokenTooltip.hoverTimeout(); }, 1000);
 });
 
 function addItemTooltipConfigTab(app, html, data) {

@@ -2,8 +2,11 @@ Hooks.on('createChatMessage', (chatMessage) => {
     if (!chatMessage.isRoll || !chatMessage.isContentVisible) {
         return;
     }
-
+    
+  console.log(chatMessage);
+  if(chatMessage.owner == true) {
     closeSheets();
+  }
 });
 
 // Confort Shortcuts on default bar

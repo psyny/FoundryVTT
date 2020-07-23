@@ -2,6 +2,12 @@
 
 ## Version 1.3.x
 
+### 1.3.1
+* **Hotkey**: Improved persistency of player list state set by the 'p' hotkey.
+* **Tooltip**: Improved display conditions (when to show or not), as requested by joshjlewis93 user on github.
+* **Fix**: Fixed an error reported by the user p4535992 on github.
+* **Sheet action on roll**: Sheet actions (minimize or close) only fires to the player who made the roll.
+
 ### 1.3.0
 * **Tooltip**: Added "case-by-case" option. Each item, under edit item -> description -> **tooltip display**, can be set to "Hidden", "Charges" or "Quantity" to be represented on the tooltip. 
 
