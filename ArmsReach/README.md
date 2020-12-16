@@ -7,6 +7,11 @@
 * **System Compatibility**: Any
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/ArmsReach
 
+### ABOUT 0.7.X and forks!
+
+I have plans to update all my mods soon (in a month or so).
+I know its a bit late, but anyone is allowed and welcome to fork or use my mods to create their own.
+
 ### Disclaimer
 
 This features of this module was first part of my (Cozy Player)[https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer] module. I've decided to make this a separate module to make it work with other systems beyond Dungeons And Dragons.
