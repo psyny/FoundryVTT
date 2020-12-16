@@ -7,6 +7,11 @@
 * **System Compatibility**: D&D 5e
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/CozyPlayer
 
+### ABOUT 0.7.X and forks!
+
+I have plans to update all my mods soon (in a month or so).
+I know its a bit late, but anyone is allowed and welcome to fork or use my mods to create their own.
+
 ### Disclaimer
 
 The main purpose of this module was to aid the players of my DnD campaign. The features were directed towards their needs.
