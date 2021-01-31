@@ -1,8 +1,100 @@
-
 .dice-so-nice input:disabled, .dice-so-nice select:disabled {
     color: #bab8af;
 }
 
 .dice-so-nice input[type=range]:disabled, .dice-so-nice input[type=color]:disabled {
     opacity: 0.3;
+}
+
+#dice-config .window-content {
+    overflow-y: hidden;
+}
+
+.dice-so-nice .dsn-settings-container {
+    /* height: 353px; */
+    overflow-y: auto;
+}
+
+.dice-so-nice .buttons-save {
+    position: sticky;
+    margin-top: 8px;
+}
+
+.dice-so-nice .form-group select {
+    flex: 1;
+}
+
+.dice-so-nice .setting-timeBeforeHide input {
+    flex: 1;
+    text-align: right;
+}
+
+.dice-so-nice nav, .dice-so-nice footer {
+    flex: 0;
+}
+
+.dice-so-nice nav.sheet-tabs{
+    border-bottom: 1px solid #000;
+    line-height: 25px;
+}
+
+.dice-so-nice section.content .settings-list {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+    padding-right: 0.5em;
+}
+
+#dice-configuration-canvas {
+    width: 477px;
+    height: 234px;
+}
+
+.dice-so-nice .sfxs-list {
+    list-style: none;
+    margin: 7px 0;
+    padding: 0;
+    overflow-y: visible;
+}
+
+.dice-so-nice .sfxs-list .sfx-header {
+    font-weight: bold;
+}
+
+.dice-so-nice .sfxs-list .sfx {
+    height: 30px;
+    line-height: 24px;
+    padding: 3px 0;
+    border-bottom: 1px solid #BBB;
+}
+
+.dice-so-nice .sfxs-list .sfx img {
+    display: block;
+}
+
+.dice-so-nice .sfxs-list .sfx-name {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    cursor: pointer;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 483px;
+    overflow: hidden;
+    display: block;
+    height: 30px;
+}
+
+.dice-so-nice .sfxs-list .sfx-controls {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 40px;
+    flex: 0 0 16px;
+    text-align: right;
+}
+
+.dice-so-nice .sfx-double {
+    flex:2;
+}
+
+.dice-so-nice .sfx-data select{
+    width:100%;
 }

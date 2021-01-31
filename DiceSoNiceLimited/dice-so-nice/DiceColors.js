@@ -1,19 +1,233 @@
 export const TEXTURELIST = {
 	'none': {
-		name: 'None',
+		name: 'DICESONICE.TextureNone',
 		composite: 'source-over',
-		source: ''
+		source: '',
+		bump: ''
+	},
+	'cloudy': {
+		name: 'DICESONICE.TextureCloudsTransparent',
+		composite: 'destination-in',
+		source: 'modules/dice-so-nice/textures/cloudy.webp',
+		bump: 'modules/dice-so-nice/textures/cloudy.alt.webp'
+	},
+	'cloudy_2': {
+		name: 'DICESONICE.TextureClouds',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/cloudy.alt.webp',
+		bump: 'modules/dice-so-nice/textures/cloudy.alt.webp'
+	},
+	'fire': {
+		name: 'DICESONICE.TextureFire',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/fire.webp',
+		bump: 'modules/dice-so-nice/textures/fire.webp'
+	},
+	'marble': {
+		name: 'DICESONICE.TextureMarble',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/marble.webp',
+		bump: '',
+		material: "glass"
+	},
+	'water': {
+		name: 'DICESONICE.TextureWaterTransparent',
+		composite: 'destination-in',
+		source: 'modules/dice-so-nice/textures/water.webp',
+		bump: 'modules/dice-so-nice/textures/water.webp',
+		material: 'glass',
+	},
+	'water_2': {
+		name: 'DICESONICE.TextureWater',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/water.webp',
+		bump: 'modules/dice-so-nice/textures/water.webp',
+		material: 'glass',
+	},
+	'ice': {
+		name: 'DICESONICE.TextureIceTransparent',
+		composite: 'destination-in',
+		source: 'modules/dice-so-nice/textures/ice.webp',
+		bump: 'modules/dice-so-nice/textures/ice.webp',
+		material: 'glass'
+	},
+	'ice_2': {
+		name: 'DICESONICE.TextureIce',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/ice.webp',
+		bump: 'modules/dice-so-nice/textures/ice.webp',
+		material: 'metal'
+	},
+	'paper': {
+		name: 'DICESONICE.TexturePaper',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/paper.webp',
+		bump: 'modules/dice-so-nice/textures/paper-bump.webp',
+		material: 'wood'
+	},
+	'speckles': {
+		name: 'DICESONICE.TextureSpeckles',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/speckles.webp',
+		bump: 'modules/dice-so-nice/textures/speckles.webp'
+	},
+	'glitter': {
+		name: 'DICESONICE.TextureGlitter',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/glitter.webp',
+		bump: 'modules/dice-so-nice/textures/glitter-bump.webp'
+	},
+	'glitter_2': {
+		name: 'DICESONICE.TextureGlitterTransparent',
+		composite: 'destination-in',
+		source: 'modules/dice-so-nice/textures/glitter-alpha.webp',
+		bump: ''
+	},
+	'stars': {
+		name: 'DICESONICE.TextureStars',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/stars.webp',
+		bump: 'modules/dice-so-nice/textures/stars.webp'
+	},
+	'stainedglass': {
+		name: 'DICESONICE.TextureStainedGlass',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/stainedglass.webp',
+		bump: 'modules/dice-so-nice/textures/stainedglass-bump.webp',
+		material: 'glass'
+	},
+	'skulls': {
+		name: 'DICESONICE.TextureSkulls',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/skulls.webp',
+		bump: 'modules/dice-so-nice/textures/skulls.webp'
+	},
+	'leopard': {
+		name: 'DICESONICE.TextureLeopard',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/leopard.webp',
+		bump: 'modules/dice-so-nice/textures/leopard.webp',
+		material: 'wood'
+	},
+	'tiger': {
+		name: 'DICESONICE.TextureTiger',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/tiger.webp',
+		bump: 'modules/dice-so-nice/textures/tiger.webp',
+		material: 'wood'
+	},
+	'cheetah': {
+		name: 'DICESONICE.TextureCheetah',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/cheetah.webp',
+		bump: 'modules/dice-so-nice/textures/cheetah.webp',
+		material: 'wood'
+	},
+	'dragon': {
+		name: 'Dragon',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/dragon.webp',
+		bump: 'modules/dice-so-nice/textures/dragon-bump.webp'
+	},
+	'lizard': {
+		name: 'Lizard',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/lizard.webp',
+		bump: 'modules/dice-so-nice/textures/lizard-bump.webp'
+	},
+	'bird': {
+		name: 'Bird',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/feather.webp',
+		bump: 'modules/dice-so-nice/textures/feather-bump.webp'
+	},
+	'astral': {
+		name: 'DICESONICE.TextureAstralSea',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/astral.webp',
+		bump: 'modules/dice-so-nice/textures/stars.webp'
+	},
+	'wood': {
+		name: 'DICESONICE.TextureWood',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/wood.webp',
+		bump: 'modules/dice-so-nice/textures/wood.webp',
+		material: 'wood'
+	},
+	'metal': {
+		name: 'DICESONICE.TextureMetal',
+		composite: 'multiply',
+		source: 'modules/dice-so-nice/textures/metal.webp',
+		bump: '',
+		material: 'metal'
+	},
+	'radial': {
+		name: 'DICESONICE.TextureRadial',
+		composite: 'source-over',
+		source: 'modules/dice-so-nice/textures/radial.webp',
+		bump: '',
+	},
+	'bronze01': {
+		name: 'DICESONICE.TextureBronze1',
+		composite: 'difference',
+		source: 'modules/dice-so-nice/textures/bronze01.webp',
+		material: 'metal',
+		bump: ''
+	},
+	'bronze02': {
+		name: 'DICESONICE.TextureBronze2',
+		composite: 'difference',
+		source: 'modules/dice-so-nice/textures/bronze02.webp',
+		material: 'metal',
+		bump: ''
+	},
+	'bronze03': {
+		name: 'DICESONICE.TextureBronze3',
+		composite: 'difference',
+		source: 'modules/dice-so-nice/textures/bronze03.webp',
+		material: 'metal',
+		bump: ''
+	},
+	'bronze03a': {
+		name: 'DICESONICE.TextureBronze3a',
+		composite: 'difference',
+		source: 'modules/dice-so-nice/textures/bronze03a.webp',
+		material: 'metal',
+		bump: ''
+	},
+	'bronze03b': {
+		name: 'DICESONICE.TextureBronze3b',
+		composite: 'difference',
+		source: 'modules/dice-so-nice/textures/bronze03b.webp',
+		material: 'metal',
+		bump: ''
+	},
+	'bronze04': {
+		name: 'DICESONICE.TextureBronze4',
+		composite: 'difference',
+		source: 'modules/dice-so-nice/textures/bronze04.webp',
+		material: 'metal',
+		bump: 'modules/dice-so-nice/textures/bronze04.webp'
 	}
 };
 
 export const COLORSETS = {
+	'coin_default': {
+		name: 'coin_default',
+		description: 'DICESONICE.ColorCoinDefault',
+		category: 'DICESONICE.AcquiredTaste',
+		foreground: '#f6c928',
+		background: '#f6c928',
+		outline: 'none',
+		texture: 'metal'
+	},
 	'radiant': {
 		name: 'radiant',
 		description: 'DICESONICE.ColorRadiant',
 		category: 'DICESONICE.DamageTypes',
 		foreground: '#F9B333',
 		background: '#FFFFFF',
-		outline: '',
+		outline: 'none',
 		texture: 'paper'
 	},
 	'fire': {
@@ -34,6 +248,15 @@ export const COLORSETS = {
 		outline: 'black',
 		texture: 'ice'
 	},
+	'cold': {
+		name: 'cold',
+		description: 'DICESONICE.ColorCold',
+		category: 'DICESONICE.DamageTypes',
+		foreground: '#60E9FF',
+		background: ['#214fa3','#3c6ac1','#253f70','#0b56e2','#09317a'],
+		outline: 'black',
+		texture: 'ice_2'
+	},
 	'poison': {
 		name: 'poison',
 		description: 'DICESONICE.ColorPoison',
@@ -50,7 +273,8 @@ export const COLORSETS = {
 		foreground: '#A9FF70',
 		background: ['#a6ff00', '#83b625','#5ace04','#69f006','#b0f006','#93bc25'],
 		outline: 'black',
-		texture: 'marble'
+		texture: 'marble',
+		material: 'plastic'
 	},
 	'thunder': {
 		name: 'thunder',
@@ -131,7 +355,8 @@ export const COLORSETS = {
 		foreground: ['#5E175E', '#564A5E','#45455E','#3D5A5E','#1E595E','#5E3F3D','#5E1E29','#283C5E','#25295E'],
 		background: ['#FE89CF', '#DFD4F2','#C2C2E8','#CCE7FA','#A1D9FC','#F3C3C2','#EB8993','#8EA1D2','#7477AD'],
 		outline: 'white',
-		texture: 'marble'
+		texture: 'marble',
+		material: 'plastic'
 	},
 	'pinkdreams': {
 		name: 'pinkdreams',
@@ -158,7 +383,8 @@ export const COLORSETS = {
 		foreground: '#CDB800',
 		background: '#6F0000',
 		outline: 'black',
-		texture: 'marble'
+		texture: 'marble',
+		material: 'plastic'
 	},
 	'starynight': {
 		name: 'starynight',
@@ -196,6 +422,27 @@ export const COLORSETS = {
 		outline: 'none',
 		edge: '#000000',
 		texture: 'radial'
+	},
+	'dragons': {
+		name: 'dragons',
+		description: 'DICESONICE.ColorDragons',
+		category: 'DICESONICE.AcquiredTaste',
+		foreground: '#FFFFFF',
+		// 			[ red,       black,     blue,      green      white      gold,      silver,    bronze,    copper     brass
+		background: ['#B80000', '#4D5A5A', '#5BB8FF', '#7E934E', '#FFFFFF', '#F6ED7C', '#7797A3', '#A78437', '#862C1A', '#FFDF8A'],
+		outline: 'black',
+		texture: ['dragon', 'lizard'],
+		description: 'Here be Dragons'
+	},
+	'birdup': {
+		name: 'birdup',
+		description: 'DICESONICE.ColorBirdUp',
+		category: 'DICESONICE.AcquiredTaste',
+		foreground: '#FFFFFF',
+		background: ['#F11602', '#FFC000', '#6EC832', '#0094BC', '#05608D', '#FEABB3', '#F75680', '#F3F0DF', '#C7A57F'],
+		outline: 'black',
+		texture: 'bird',
+		description: 'Bird Up!'
 	},
 	'tigerking': {
 		name: 'tigerking',
@@ -251,6 +498,16 @@ export const COLORSETS = {
 		outline: '#FFFFFF',
 		texture: 'none'
 	},
+	'bronze': {
+		name: 'bronze',
+		description: 'DICESONICE.ColorBronze',
+		category: 'DICESONICE.ThemesSoNice',
+		foreground: ['#FF9159','#FFB066','#FFBF59','#FFD059'],
+		background: ['#705206','#7A4E06','#643100','#7A2D06'],
+		outline: ['#3D2D03','#472D04','#301700','#471A04'],
+		edge: ['#FF5D0D','#FF7B00','#FFA20D','#FFBA0D'],
+		texture: [['bronze01','bronze02','bronze03','bronze03b','bronze03b','bronze04']]
+	},
 	'custom': {
 		name: 'custom',
 		description: 'DICESONICE.ColorCustom',
@@ -263,19 +520,34 @@ export const COLORSETS = {
 	}
 };
 
+export const DICE_SCALE = {
+	"d2":1,
+	"d4":1,
+	"d6":1.3,
+	"d8":1.1,
+	"d10":1,
+	"d12":1.1,
+	"d20":1,
+	"d3":1.3,
+	"d5":1,
+	"df":2,
+	"d100":0.75
+};
+
 export class DiceColors {
 
 	static loadTextures(sources, callback) {
 
 		let images = {};
+		let bumps = {};
 		let loadedImages = 0;
 	
 		let itemprops = Object.entries(sources);
-		let numImages = itemprops.length;
+		let numImages = itemprops.length*2; //One for texture, one for bump texture
 		for (const [key, value] of itemprops) {
 
 			if(value.source === '') {
-				++loadedImages;
+				loadedImages+=2;
 				continue;
 			}
 	
@@ -284,10 +556,28 @@ export class DiceColors {
 	
 				if (++loadedImages >= numImages) {
 					DiceColors.diceTextures = mergeObject(images, DiceColors.diceTextures || {});
+					DiceColors.diceBumps = mergeObject(bumps, DiceColors.diceBumps || {});
 					callback(images);
 				}
 			};
 			images[key].src = value.source;
+
+			if(value.bump === '') {
+				++loadedImages;
+				continue;
+			}
+
+			bumps[key] = new Image();
+			bumps[key].onload = function() {
+	
+				if (++loadedImages >= numImages) {
+					DiceColors.diceTextures = mergeObject(images, DiceColors.diceTextures || {});
+					DiceColors.diceBumps = mergeObject(bumps, DiceColors.diceBumps || {});
+					callback(images);
+				}
+			};
+
+			bumps[key].src = value.bump;
 		}
 	}
 	
@@ -297,7 +587,7 @@ export class DiceColors {
 	
 			let textures = [];
 			for(let i = 0, l = texturename.length; i < l; i++){
-				if (typeof texturename[i] == 'string') {
+				if (typeof texturename[i] == 'string' || Array.isArray(texturename[i])) {
 					textures.push(this.getTexture(texturename[i]));
 				}
 			}
@@ -305,11 +595,11 @@ export class DiceColors {
 		}
 	
 		if (!texturename || texturename == '') {
-			return {name:'',texture:''};
+			return {name:'',texture:'',material:"plastic"};
 		}
 	
 		if (texturename == 'none') {
-			return {name:'none',texture:'',};
+			return {name:'none',texture:'',material:"plastic"};
 		}
 	
 		if(texturename == 'random') {
@@ -323,7 +613,11 @@ export class DiceColors {
 		if(!DiceColors.diceTextures)
 			return texturename;
 		if (DiceColors.diceTextures[texturename] != null) {
-			return { name: texturename, texture: DiceColors.diceTextures[texturename], composite: TEXTURELIST[texturename].composite };
+			if(!TEXTURELIST[texturename].material)
+				TEXTURELIST[texturename].material = "plastic";
+			if(!DiceColors.diceBumps[texturename])
+				DiceColors.diceBumps[texturename] = '';
+			return { name: texturename, bump: DiceColors.diceBumps[texturename], material: TEXTURELIST[texturename].material, texture: DiceColors.diceTextures[texturename], composite: TEXTURELIST[texturename].composite };
 		}
 		return {name:'',texture:''};
 	}
@@ -356,9 +650,18 @@ export class DiceColors {
 			sets = Object.entries(COLORSETS);
 		for (const [name, data] of sets) {
 			COLORSETS[name].id = name;
-			COLORSETS[name].texture = this.getTexture(data.texture);
+			if(data.texture != "custom")
+				COLORSETS[name].texture = this.getTexture(data.texture);
 			if(typeof COLORSETS[name].texture == "object")
 				COLORSETS[name].texture.id = data.texture;
+			if(!COLORSETS[name].material)
+				COLORSETS[name].material = '';
+			if(!COLORSETS[name].font)
+				COLORSETS[name].font = 'Arial';
+			if(!COLORSETS[name].fontScale)
+				COLORSETS[name].fontScale = DICE_SCALE;
+			else
+				COLORSETS[name].fontScale = mergeObject(DICE_SCALE,COLORSETS[name].fontScale,{inplace:false});
 		}
 		
 		// generate the colors and textures for the random set
@@ -385,7 +688,7 @@ export class DiceColors {
 	
 	static getColorSet(colorsetname) {
 		let colorset = COLORSETS[colorsetname] || COLORSETS['custom'];
-		return colorset;
+		return {...colorset};
 	}
 
 	static setColorCustom(foreground = '#FFFFFF', background = '#000000', outline = '#FFFFFF', edge = '#FFFFFF'){
@@ -395,7 +698,7 @@ export class DiceColors {
 		COLORSETS['custom'].edge = edge;
 	}
 
-	static applyColorSet(dicefactory, colorset, texture = null) {
+	static applyColorSet(dicefactory, colorset, texture = null, material = null, font = null) {
 		var colordata = DiceColors.getColorSet(colorset);
 		
 		if (colorset && colorset.length > 0) {
@@ -411,6 +714,14 @@ export class DiceColors {
 				dicefactory.applyTexture(texturedata);
 			}
 	
+		}
+
+		if (material || colordata.material) {
+			dicefactory.applyMaterial((material || colordata.material));
+		}
+
+		if (font || colordata.font) {
+			dicefactory.applyFont((font || colordata.font));
 		}
 	}
 }

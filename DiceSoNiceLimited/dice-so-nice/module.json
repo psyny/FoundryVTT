@@ -1,18 +1,28 @@
 {
 	"name": "dice-so-nice",
-	"title": "Dice So Nice! (limited edition)",
-	"description": "Adds the ability to show a nice 3D dice simulation when a roll is made. This version limits functionality: basicaly the dice color will always reflect the player color.",
-	"version": "1.1.2",
-  "original-version": "2.0.2",
-	"minimumCoreVersion" : "0.5.7",
-	"compatibleCoreVersion" : "0.6.2",
-	"author": "Simone and JDW done a great job but Psyny changed stuff... for worse",
+	"title": "Dice So Nice! Psyny's Edition",
+	"description": "Adds the ability to show a nice 3D dice simulation when a roll is made.",
+  "version": "1.2.0",
+	"base-version": "3.3.1",
+	"minimumCoreVersion" : "0.7.2",
+	"compatibleCoreVersion" : "0.7.9",
+	"author": "Simone, JDW",
+	"authors": [
+		{
+			"name": "Simone",
+			"discord": "Simone [UTC +2]#6710"
+		},
+		{
+			"name": "JDW",
+			"discord": "JDW#6422",
+			"reddit":"u/jidewe"
+		}
+	],
 	"esmodules": [
 		"./main.js"
 	],
 	"scripts": [
-		"./libs/cannon.min.js",
-		"./libs/three.min.js"
+		"./libs/cannon.min.js"
 	],
 	"socket": true,
 	"styles": [
@@ -28,9 +38,15 @@
 		"path": "./lang/it.json"
 	}, {
 		"lang": "es",
-		"name": "Spanish",
+		"name": "Español",
 		"path": "./lang/es.json"
-	}, {
+	},
+	{
+		"lang" : "ca",
+		"name" : "Català",
+		"path" : "./lang/ca.json"
+	},
+	{
 		"lang": "cn",
 		"name": "Chinese",
 		"path": "./lang/cn.json"
@@ -42,8 +58,46 @@
 		"lang": "pt-BR",
 		"name": "Português (Brasil)",
 		"path": "./lang/pt-BR.json"
+	}, {
+		"lang": "fr",
+		"name": "Français",
+		"path": "./lang/fr.json"
+	}, {
+		"lang": "ja",
+		"name": "日本語",
+		"path": "./lang/ja.json"
 	}],
-  
+	"media":[
+		{
+			"type":"cover",
+			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/cover.jpg"
+		},
+		{
+			"type":"video",
+			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/dsnloop-360.webm",
+			"loop": true
+		},
+		{
+			"type":"video",
+			"link":"https://www.youtube.com/watch?v=4b_C5R3t6iw"
+		},
+		{
+			"type":"screenshot",
+			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot1.jpg"
+		},
+		{
+			"type":"screenshot",
+			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot2.jpg"
+		},
+		{
+			"type":"screenshot",
+			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot3.jpg"
+		},
+		{
+			"type":"screenshot",
+			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot4.jpg"
+		}
+	],
   "url": "https://github.com/psyny/FoundryVTT/tree/master/DiceSoNiceLimited/dice-so-nice",
 	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/DiceSoNiceLimited/dice-so-nice/module.json",
 	"download": "https://github.com/psyny/FoundryVTT/raw/master/DiceSoNiceLimited/dice-so-nice.zip"

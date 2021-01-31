@@ -1,0 +1,16 @@
+<li class="sfx flexrow sfx-line">
+    <div class="sfx-data">
+        <input type="text" name="sfxLine[{{id}}][diceType]" value="" placeholder="d20, d6, df..." />
+    </div>
+    <div class="sfx-data">
+        <input type="text" name="sfxLine[{{id}}][onResult]" value="" placeholder="1, 20, 6..." />
+    </div>
+    <div class="sfx-data sfx-double">
+        <select name="sfxLine[{{id}}][specialEffect]">
+            {{selectOptions specialEffectsMode localize=true}}
+        </select>
+    </div>
+    <div class="sfx-controls">
+        <a class="sfx-control sfx-delete" title='{{localize "DICESONICE.Delete"}}'><i class="fas fa-trash"></i></a>
+    </div>
+</li>

@@ -1,0 +1,8 @@
+
+.dice-so-nice input:disabled, .dice-so-nice select:disabled {
+    color: #bab8af;
+}
+
+.dice-so-nice input[type=range]:disabled, .dice-so-nice input[type=color]:disabled {
+    opacity: 0.3;
+}
