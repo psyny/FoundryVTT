@@ -1,0 +1,36 @@
+{
+    "name": "psyny-tools",
+    "title": "Psyny's Tools",
+    "description": "Add some extra tools to the default toolbar: basic controls: roll initiative, end turn, send targets to chat and rolls for perception, insight and investigation.",
+    "version": "0.9.0",
+    "library": "false",
+    "minimumCoreVersion": "0.7.9",
+    "compatibleCoreVersion": "0.7.9",
+    "type": "module",
+    "authors": [
+        {
+            "name": "Psyny",
+            "url": "https://github.com/psyny",
+            "email": "psyny@hotmail.com"
+        }
+    ],
+    "dependencies": [],
+    "conflicts": [],
+    "esmodules": [
+        "./scripts/main.js"
+    ],
+    "styles": [
+        "./styles.css"
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
+    "license": "./LICENSE",
+    "url": "https://github.com/psyny/FoundryVTT/tree/master/PsynyTools",
+    "manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/PsynyTools/psyny-tools/module.json",
+    "download": "https://github.com/psyny/FoundryVTT/raw/master/PsynyTools/psyny-tools.zip"
+}
