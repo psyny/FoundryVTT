@@ -107,7 +107,7 @@ class TokenTooltip
     
     // Speed
     if(game.settings.get("cozy-player", "tooltipShowSpeed"))
-      TokenTooltip._addConstValue(resources, "speed", "fas fa-shoe-prints", object.actor.data.data.attributes.speed.value);
+      TokenTooltip._addConstValue(resources, "speed", "fas fa-shoe-prints", object.actor.data.data.attributes.movement.walk);
     
     // Passive Pereception
     if(game.settings.get("cozy-player", "tooltipPassivePerception"))
