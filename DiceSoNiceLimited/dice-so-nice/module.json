@@ -67,37 +67,6 @@
 		"name": "日本語",
 		"path": "./lang/ja.json"
 	}],
-	"media":[
-		{
-			"type":"cover",
-			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/cover.jpg"
-		},
-		{
-			"type":"video",
-			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/dsnloop-360.webm",
-			"loop": true
-		},
-		{
-			"type":"video",
-			"link":"https://www.youtube.com/watch?v=4b_C5R3t6iw"
-		},
-		{
-			"type":"screenshot",
-			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot1.jpg"
-		},
-		{
-			"type":"screenshot",
-			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot2.jpg"
-		},
-		{
-			"type":"screenshot",
-			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot3.jpg"
-		},
-		{
-			"type":"screenshot",
-			"link":"https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/raw/master/screenshot4.jpg"
-		}
-	],
   "url": "https://github.com/psyny/FoundryVTT/tree/master/DiceSoNiceLimited/dice-so-nice",
 	"manifest": "https://raw.githubusercontent.com/psyny/FoundryVTT/master/DiceSoNiceLimited/dice-so-nice/module.json",
 	"download": "https://github.com/psyny/FoundryVTT/raw/master/DiceSoNiceLimited/dice-so-nice.zip"

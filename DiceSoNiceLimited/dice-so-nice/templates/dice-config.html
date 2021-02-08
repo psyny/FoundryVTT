@@ -11,38 +11,7 @@
                 <div id="dice-configuration-canvas"></div>
                 <div class="dsn-settings-container">
                     <div class="form-group">
-                        <label>{{localize "DICESONICE.enable"}}</label>
-                        <input type="checkbox" name="enabled" data-dtype="Boolean" {{checked enabled}} />
-                    </div>
-                    <div class="form-group">
-                        <label>{{localize "DICESONICE.system"}}</label>
-                        <select name="system">
-                            {{#select system}}
-                            {{#each systemList as |name key|}}
-                            <option value="{{key}}">{{name}}</option>
-                            {{/each}}
-                            {{/select}}
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{localize "DICESONICE.colorset"}}</label>
-                        <select name="colorset">
-                            {{#select colorset}}
-                            {{#each colorsetList as |group key|}}
-                            <optgroup label="{{key}}">
-                                {{#each group as |name id|}}
-                                <option value="{{id}}">{{name}}</option>
-                                {{/each}}
-                            </optgroup>
-                            {{/each}}
-                            {{/select}}
-                        </select>
-                        <p class="notes">{{localize "DICESONICE.colorsetDesc"}}</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{localize "DICESONICE.texture"}}</label>
+                        <label>Art</label>
                         <select name="texture">
                             {{#select texture}}
                             {{#each textureList as |name key|}}
@@ -53,7 +22,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{localize "DICESONICE.material"}}</label>
+                        <label>Material</label>
                         <select name="material">
                             {{#select material}}
                             {{#each materialList as |name key|}}
@@ -64,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{localize "DICESONICE.font"}}</label>
+                        <label>Number Font</label>
                         <select name="font">
                             {{#select font}}
                             {{#each fontList as |name key|}}
@@ -75,7 +44,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{localize "DICESONICE.labelColor"}}</label>
+                        <label>Number Color</label>
                         <div class="form-fields">
                             <input type="text" name="labelColor" value="{{labelColor}}" data-dtype="String" />
                             <input type="color" name="labelColorSelector" value="{{labelColor}}" data-edit="labelColor" />
@@ -83,15 +52,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{localize "DICESONICE.diceColor"}}</label>
-                        <div class="form-fields">
-                            <input type="text" name="diceColor" value="{{diceColor}}" data-dtype="String" />
-                            <input type="color" name="diceColorSelector" value="{{diceColor}}" data-edit="diceColor" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{localize "DICESONICE.outlineColor"}}</label>
+                        <label>Font Outline Color</label>
                         <div class="form-fields">
                             <input type="text" name="outlineColor" value="{{outlineColor}}" data-dtype="String" />
                             <input type="color" name="outlineColorSelector" value="{{outlineColor}}" data-edit="outlineColor" />
@@ -99,10 +60,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{localize "DICESONICE.edgeColor"}}</label>
+                        <label>Dice Edge Color</label>
                         <div class="form-fields">
                             <input type="text" name="edgeColor" value="{{edgeColor}}" data-dtype="String" />
-                            <input type="color" name="edgeColorSelector" value="{{edgeColor}}" data-edit="edgeColor" />
+                            <button type="button" name="removeEdges"><i class="fas fa-trash"></i></button>
+                            <input type="color" name="edgeColorSelector" value="{{edgeColor}}" data-edit="edgeColor" />                            
                         </div>
                     </div>
                 </div>

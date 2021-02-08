@@ -3,6 +3,7 @@ import { DiceBox } from './DiceBox.js';
 import { DiceColors, TEXTURELIST, COLORSETS } from './DiceColors.js';
 import { DiceNotation } from './DiceNotation.js';
 import { DiceSFXManager } from './DiceSFXManager.js';
+import {fillTextureDatabase} from './textureDB.js';  // PSY
 
 /**
  * Registers the exposed settings for the various 3D dice options.
@@ -150,7 +151,8 @@ Hooks.once('init', () => {
             location.reload();
         }
     });
-
+    
+    fillTextureDatabase(TEXTURELIST); // PSY
 });
 
 /**
@@ -307,7 +309,7 @@ class Utils {
 
     static prepareFontList() {
         let fontList = {
-            "auto": game.i18n.localize("DICESONICE.FontAuto")
+            // "auto": game.i18n.localize("DICESONICE.FontAuto") // PSY
         };
         game.dice3d.box.dicefactory.fontFamilies.forEach(font => {
             fontList[font] = font;
@@ -958,7 +960,7 @@ class DiceConfig extends FormApplication {
             }),
             textureList: Utils.prepareTextureList(),
             materialList: Utils.localize({
-                "auto": "DICESONICE.MaterialAuto",
+                // "auto": "DICESONICE.MaterialAuto", // PSY
                 "plastic": "DICESONICE.MaterialPlastic",
                 "metal": "DICESONICE.MaterialMetal",
                 "glass": "DICESONICE.MaterialGlass",
@@ -1017,9 +1019,10 @@ class DiceConfig extends FormApplication {
             html.find('input[name="hideAfterRoll"]').change(this.toggleHideAfterRoll.bind(this));
             html.find('input[name="sounds"]').change(this.toggleSounds.bind(this));
             html.find('input[name="autoscale"]').change(this.toggleAutoScale.bind(this));
-            html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this));
+            // html.find('select[name="colorset"]').change(this.toggleCustomColors.bind(this)); // PSY
             html.find('input,select').change(this.onApply.bind(this));
             html.find('button[name="reset"]').click(this.onReset.bind(this));
+            html.find('button[name="removeEdges"]').click(this.onRemoveEdges.bind(this)); // PSY
 
             this.reset = false;
         });
@@ -1066,13 +1069,14 @@ class DiceConfig extends FormApplication {
     }
 
     toggleCustomColors() {
-        let colorset = $('select[name="colorset"]').val() !== 'custom';
+        // let colorset = $('select[name="colorset"]').val() !== 'custom'; // PSY
+        let colorset = false; // PSY
         $('input[name="labelColor"]').prop("disabled", colorset);
-        $('input[name="diceColor"]').prop("disabled", colorset);
+        // $('input[name="diceColor"]').prop("disabled", colorset); // PSY
         $('input[name="outlineColor"]').prop("disabled", colorset);
         $('input[name="edgeColor"]').prop("disabled", colorset);
         $('input[name="labelColorSelector"]').prop("disabled", colorset);
-        $('input[name="diceColorSelector"]').prop("disabled", colorset);
+        // $('input[name="diceColorSelector"]').prop("disabled", colorset); // PSY
         $('input[name="outlineColorSelector"]').prop("disabled", colorset);
         $('input[name="edgeColorSelector"]').prop("disabled", colorset);
     }
@@ -1084,19 +1088,19 @@ class DiceConfig extends FormApplication {
 
             let config = {
                 labelColor: $('input[name="labelColor"]').val(),
-                diceColor: $('input[name="diceColor"]').val(),
+                diceColor: game.user.color, // PSY
                 outlineColor: $('input[name="outlineColor"]').val(),
                 edgeColor: $('input[name="edgeColor"]').val(),
                 autoscale: false,
                 scale: 60,
                 shadowQuality: $('select[name="shadowQuality"]').val(),
                 bumpMapping: $('input[name="bumpMapping"]').is(':checked'),
-                colorset: $('select[name="colorset"]').val(),
+                colorset: "custom", // PSY
                 texture: $('select[name="texture"]').val(),
                 material: $('select[name="material"]').val(),
                 font: $('select[name="font"]').val(),
                 sounds: $('input[name="sounds"]').is(':checked'),
-                system: $('select[name="system"]').val(),
+                system: "standard", // PSY
                 throwingForce:$('select[name="throwingForce"]').val(),
                 useHighDPI:$('input[name="useHighDPI"]').is(':checked')
             };
@@ -1176,4 +1180,11 @@ class DiceConfig extends FormApplication {
         this.box.clearScene();
 		this.box.dicefactory.disposeCachedMaterials("showcase");
     }
+    
+    // PSY - START
+    onRemoveEdges(event) {
+      $('input[name="edgeColor"]')[0].value = "";
+      this.onApply(event);
+    }
+    // PSY - END
 }

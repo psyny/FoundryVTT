@@ -1,10 +1,12 @@
 export const TEXTURELIST = {
+  // PSY - Removing original textures
+  /*  
 	'none': {
 		name: 'DICESONICE.TextureNone',
 		composite: 'source-over',
 		source: '',
 		bump: ''
-	},
+	}, 
 	'cloudy': {
 		name: 'DICESONICE.TextureCloudsTransparent',
 		composite: 'destination-in',
@@ -209,6 +211,7 @@ export const TEXTURELIST = {
 		material: 'metal',
 		bump: 'modules/dice-so-nice/textures/bronze04.webp'
 	}
+  */
 };
 
 export const COLORSETS = {

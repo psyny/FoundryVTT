@@ -278,6 +278,7 @@ export class DiceFactory {
 						envMap : true
 					}
 				},
+        // PSY
 				'chrome': {
 					'type':'standard',
 					'options': {
