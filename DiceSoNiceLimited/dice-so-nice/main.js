@@ -1069,6 +1069,7 @@ class DiceConfig extends FormApplication {
     }
 
     toggleCustomColors() {
+        // PSY - Keep all color settings enabled
         // let colorset = $('select[name="colorset"]').val() !== 'custom'; // PSY
         let colorset = false; // PSY
         $('input[name="labelColor"]').prop("disabled", colorset);
@@ -1104,7 +1105,7 @@ class DiceConfig extends FormApplication {
                 throwingForce:$('select[name="throwingForce"]').val(),
                 useHighDPI:$('input[name="useHighDPI"]').is(':checked')
             };
-		    this.box.dicefactory.disposeCachedMaterials("showcase");
+            this.box.dicefactory.disposeCachedMaterials("showcase");
             this.box.update(config);
             this.box.showcase(config);
         }, 100);
@@ -1154,7 +1155,7 @@ class DiceConfig extends FormApplication {
             delete formData.sfxLine;
         }
 
-        if(formData.colorset != "custom"){
+        if(formData.colorset != "custom" && false){ // PSY
                 delete formData.labelColor;
                 delete formData.diceColor;
                 delete formData.outlineColor;
